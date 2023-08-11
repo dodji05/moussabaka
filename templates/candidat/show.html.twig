@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidat{% endblock %}
+
+{% block body %}
+    <div class="col-md-12">
+        <div class="card card-outline card-success">
+            <div class="card-header">
+                <div class="card-title"> Informations du candidat</div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Numero du Candidat</th>
+                        <td>{{ candidat.numeroCandidat }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ candidat.mom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prenom</th>
+                        <td>{{ candidat.prenom }}</td>
+                    </tr>
+
+{#                    <tr>#}
+{#                        <th>Active</th>#}
+{#                        <td>{{ candidat.active ? 'Yes' : 'No' }}</td>#}
+{#                    </tr>#}
+{#                    <tr>#}
+{#                        <th>CreatedAt</th>#}
+{#                        <td>{{ candidat.createdAt ? candidat.createdAt|date('Y-m-d H:i:s') : '' }}</td>#}
+{#                    </tr>#}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12">
+        <div class="card card-outline card-success">
+            <div class="card-header">
+                <div class="card-title"> Notes du candidat</div>
+            </div>
+            <div class="card-body">
+
+            </div>
+        </div>
+
+    </div>
+
+{#    <a href="{{ path('app_candidat_index') }}">back to list</a>#}
+
+{#    <a href="{{ path('app_candidat_edit', {'id': candidat.id}) }}">edit</a>#}
+
+    {{ include('candidat/_delete_form.html.twig') }}
+{% endblock %}

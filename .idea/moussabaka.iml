@@ -130,6 +130,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/messenger" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/process" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/serializer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/sensio/framework-extra-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofsymfony/jsrouting-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/willdurand/jsonp-callback-validator" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

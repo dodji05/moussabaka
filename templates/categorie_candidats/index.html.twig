@@ -1,0 +1,204 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %} Categorie Candidat{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"> Liste des categorie</div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Categorie</th>
+
+                            <th>actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for categorie_candidat in categorie_candidats %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ categorie_candidat.name }}</td>
+
+                                <td>
+                                    {#                                <a href="{{ path('app_categorie_candidats_show', {'id': categorie_candidat.id}) }}"> #}
+                                    {#                                    <i class="fas fa-eye"> #}
+
+                                    {#                                    </i> #}
+                                    {#                                </a> #}
+                                    <a href="{{ path('app_categorie_candidats_edit', {'id': categorie_candidat.id}) }}"
+                                       data-rec="{{ categorie_candidat.id }}" onclick="BonplanEdit(event, this)"
+                                       class="btn btn-success">
+                                        <i class="fas fa-edit">
+
+                                        </i>
+
+                                    </a>
+                                    <a href="{{ path('app_categorie_candidats_edit', {'id': categorie_candidat.id}) }}"
+                                       class="btn btn-danger">
+                                        <i class="fas fa-trash">
+
+                                        </i>
+
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title"> Ajouter une nouvelle categorie</div>
+                </div>
+                <div class="card-body">
+                    {{ include('categorie_candidats/_form.html.twig') }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% include 'modal/base_modal.html.twig' with { modalId: 'edit-modal', modalTitle: 'Modifier' } %}
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+<script>
+
+    function BonplanEdit(e, $elem){
+    e.preventDefault();
+    //Get record to edit
+    var $id = $($elem).data('rec');
+    var $modal = $('#pleaseWaitDialog');
+    var $autoEcoleForm = $('#edit-modal');
+    // Block screen
+    $modal.modal();
+    $route ="https://127.0.0.1:8000/categorie/candidats/"+$id+"/create-form"
+    $submit_route = "https://127.0.0.1:8000/categorie/candidats/"+$id+"/edit"
+    $urlSucces = window.location.protocol + "//" + window.location.host + window.location.pathname;
+
+    // Ajax request for get edit autoEcole form
+    $.ajax({
+    url:  Routing.generate('categorie_edits', {'id' : $id }),
+    type: 'GET',
+    success: function (html) {
+    // Permit
+    $modal.modal('hide');
+    // add content to display
+
+    $autoEcoleForm.find('.modal-body').html(html);
+    //  alert(html);
+
+    // Add submit link to finish
+    var $submit = $("<input type='button' class ='btn btn-primary float-lg-right' value='Modifier la categorie' />").on('click', function (e) {
+    e.preventDefault();
+    // Get form to submit
+    // alert("html");
+    var $form = $('#categoriecircuits');
+    // alert($form.serialize());
+    // Validate the form
+    if(!formIsValide()){
+    console.log('Some fields are required !!!');
+    return false;
+}
+
+    // Block btn action for future click
+    var $el = $(this);
+    $el.button('loading');
+    // Submit form
+    $.ajax({
+    type:  $form.attr('method'),
+    url: $submit_route, //Routing.generate('admin_categories_circuit_edit', {'id' : $id }),
+    data: $form.serialize()
+
+})
+    .done(function (data) {
+          console.log(data);
+    if(!data.success){
+    console.log(JSON.stringify(data.errors));
+     alert(JSON.stringify(data.errors))
+}else{
+    // Redirect to Home page
+    window.location.href = $urlSucces;
+}
+}).fail(function (jqXHR, textStatus, errorThrown) {
+    console.log(jqXHR);
+    console.log(textStatus);
+    console.log(errorThrown);
+
+    // Permit the button
+    $el.button('reset');
+});
+});
+
+    // Append it
+    $autoEcoleForm.find('.modal-footer').empty().append($submit);
+    // Display
+    $autoEcoleForm.modal('show');
+}
+})
+}
+    function formIsValide() {
+    var isvalid = true;
+
+    // Vérifier si tous les champs obligatoires sont remplis
+    $('.mandatory').each(function () {
+    var $el = $(this);
+    var val, $parent;
+    if ($el.is('input')) {
+    if ($el.attr('type') === 'number') {
+    val = $.trim($el.val());
+    $parent = $el.closest('.form-group');
+    $parent.removeClass('has-error');
+    if (val == '') {
+    $parent.addClass('has-error');
+    isvalid = isvalid && false;
+}
+} else if ($el.attr('type') === 'checkbox') {
+} else {
+    val = $.trim($el.val());
+    $parent = $el.closest('.form-group');
+    $parent.removeClass('has-error');
+    if (val == '') {
+    $parent.addClass('has-error');
+    isvalid = isvalid && false;
+}
+}
+} else if ($el.is('select')) {
+    val = $.trim($el.val());
+    $parent = $el.closest('.form-group');
+    $parent.removeClass('has-error');
+    if (val == '') {
+    $parent.addClass('has-error');
+    isvalid = isvalid && false;
+}
+} else if ($el.is('textarea')) {
+    val = $.trim($el.val());
+    $parent = $el.closest('.form-group');
+    $parent.removeClass('has-error');
+    if (val == '') {
+    $parent.addClass('has-error');
+    isvalid = isvalid && false;
+}
+}
+});
+
+    return isvalid;
+}
+</script>
+{% endblock %}

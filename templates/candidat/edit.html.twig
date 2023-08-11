@@ -1,0 +1,25 @@
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="col-md-8 offset-md-2">
+        <div class="card card-outline card-success">
+            <div class="card-header">
+                <div class="card-title"> Modifier les informations d'un candidat</div>
+            </div>
+            <div class="card-body">
+                {{ include('candidat/_form.html.twig', {'button_label': 'Modifie'}) }}
+            </div>
+        </div>
+
+    </div>
+
+
+    {#    <h1>Create new Candidat</h1>#}
+
+    {#   #}
+
+    {#    <a href="{{ path('app_candidat_index') }}">back to list</a>#}
+{% endblock %}
+

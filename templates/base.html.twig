@@ -103,38 +103,60 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li class="nav-item menu-open">
-                        <a href="#" class="nav-link active">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Starter Pages
+                                Candidat
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
+                        <ul class="nav nav-treeview" style="display: none;">
                             <li class="nav-item">
-                                <a href="#" class="nav-link active">
+                                <a href="{{ path('app_categorie_candidats_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Active Page</p>
+                                    <p>Categorie</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a href="{{ path('app_candidat_index') }}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Inactive Page</p>
+                                    <p>Liste des candidats</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('app_candidat_new') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ajouter un candidat</p>
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Simple Link
-                                <span class="right badge badge-danger">New</span>
+                                Jury
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ path('app_jury_index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Liste des jurees</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('app_jury_new') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ajouter un jury</p>
+                                </a>
+                            </li>
+
+                        </ul>
                     </li>
+
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -142,7 +164,25 @@
         <!-- /.sidebar -->
     </aside>
     <div class="content-wrapper">
-        {% block body %}{% endblock %}
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>{% block title %} {% endblock %}</h1>
+                    </div>
+                    {#                    <div class="col-sm-6"> #}
+                    {#                        <ol class="breadcrumb float-sm-right"> #}
+                    {#                            <li class="breadcrumb-item"><a href="#">Home</a></li> #}
+                    {#                            <li class="breadcrumb-item active">Simple Tables</li> #}
+                    {#                        </ol> #}
+                    {#                    </div> #}
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
+        <div class="container">
+
+            {% block body %}{% endblock %}
+        </div>
     </div>
 
     <!-- Main Footer -->

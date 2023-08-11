@@ -1,0 +1,69 @@
+{#{% if modalId is defined %}id='{{ modalId }}'{% endif %} class="fade show" tabindex="-1" role="dialog" class="modal fade"#}
+{#<div  {% if modalId is defined %}id='{{ modalId }}'{% endif %} class="fade fade" tabindex="-1" role="dialog"  >#}
+
+{#    <div class="modal-dialog">#}
+{#        <div class="modal-content">#}
+{#            <div class="modal-header">#}
+{#                <h4 class="modal-title">Default Modal</h4>#}
+{#                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                    <span aria-hidden="true">&times;</span>#}
+{#                </button>#}
+{#            </div>#}
+{#            <div class="modal-body">#}
+{#                <p>One fine body&hellip;</p>#}
+{#            </div>#}
+{#            <div class="modal-footer justify-content-between">#}
+{#                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                <button type="button" class="btn btn-primary">Save changes</button>#}
+{#            </div>#}
+{#        </div>#}
+{#        <!-- /.modal-content -->#}
+{#    </div>#}
+{#    #}{#    <div class="modal-dialog">#}
+{#        <div class="modal-content">#}
+{#            <div class="overlay">#}
+{#                <i class="fas fa-2x fa-sync fa-spin"></i>#}
+{#            </div>#}
+{#            <div class="modal-header">#}
+{#                <h4 class="modal-title">Modificationl</h4>#}
+{#                <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                    <span aria-hidden="true">&times;</span>#}
+{#                </button>#}
+{#            </div>#}
+{#            <div class="modal-body">#}
+{#                {% block body %}{% endblock %}#}
+{#            </div>#}
+{#            {% if app.request.xmlHttpRequest==false %}#}
+{#            <div class="modal-footer justify-content-between">#}
+{#                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#                <button class="btn btn-primary" >{{ button_label|default('Modifier') }}</button>#}
+
+{#            </div>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#        <!-- /.modal-content -->#}
+{#    </div>#}
+{#    <!-- /.modal-dialog -->#}
+{#</div>#}
+{#<!-- /.modal -->#}
+<div class="modal fade" id="edit-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Default Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
