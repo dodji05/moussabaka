@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SourateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SourateRepository::class)]
@@ -15,61 +16,95 @@ class Sourate
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $libelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'verset', targetEntity: Verset::class)]
-    private Collection $versets;
+    #[ORM\Column]
+    private ?int $surahnumber = null;
 
-    public function __construct()
-    {
-        $this->versets = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $surahnamearabic = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $surahnameenglish = null;
+
+    #[ORM\Column]
+    private ?int $ayahnumber = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $originalarabictext = null;
+
+
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getLibelle(): ?string
+
+
+    public function getSurahnumber(): ?int
     {
-        return $this->libelle;
+        return $this->surahnumber;
     }
 
-    public function setLibelle(?string $libelle): static
+    public function setSurahnumber(int $surahnumber): static
     {
-        $this->libelle = $libelle;
+        $this->surahnumber = $surahnumber;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Verset>
-     */
-    public function getVersets(): Collection
+    public function getSurahnamearabic(): ?string
     {
-        return $this->versets;
+        return $this->surahnamearabic;
     }
 
-    public function addVerset(Verset $verset): static
+    public function setSurahnamearabic(string $surahnamearabic): static
     {
-        if (!$this->versets->contains($verset)) {
-            $this->versets->add($verset);
-            $verset->setVerset($this);
-        }
+        $this->surahnamearabic = $surahnamearabic;
 
         return $this;
     }
 
-    public function removeVerset(Verset $verset): static
+    public function getSurahnameenglish(): ?string
     {
-        if ($this->versets->removeElement($verset)) {
-            // set the owning side to null (unless already changed)
-            if ($verset->getVerset() === $this) {
-                $verset->setVerset(null);
-            }
-        }
+        return $this->surahnameenglish;
+    }
+
+    public function setSurahnameenglish(string $surahnameenglish): static
+    {
+        $this->surahnameenglish = $surahnameenglish;
 
         return $this;
     }
+
+    public function getAyahnumber(): ?int
+    {
+        return $this->ayahnumber;
+    }
+
+    public function setAyahnumber(int $ayahnumber): static
+    {
+        $this->ayahnumber = $ayahnumber;
+
+        return $this;
+    }
+
+    public function getOriginalarabictext(): ?string
+    {
+        return $this->originalarabictext;
+    }
+
+    public function setOriginalarabictext(string $originalarabictext): static
+    {
+        $this->originalarabictext = $originalarabictext;
+
+        return $this;
+    }
+
+
+
+
+
+
 }
