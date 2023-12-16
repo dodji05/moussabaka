@@ -37,6 +37,18 @@ class Candidat
     #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: Notes::class)]
     private Collection $notes;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $age = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $localite = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $ecoleProvenance = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
@@ -145,6 +157,54 @@ class Candidat
                 $note->setCandidat(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(?int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    public function getLocalite(): ?string
+    {
+        return $this->localite;
+    }
+
+    public function setLocalite(?string $localite): self
+    {
+        $this->localite = $localite;
+
+        return $this;
+    }
+
+    public function getEcoleProvenance(): ?string
+    {
+        return $this->ecoleProvenance;
+    }
+
+    public function setEcoleProvenance(?string $ecoleProvenance): self
+    {
+        $this->ecoleProvenance = $ecoleProvenance;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }
