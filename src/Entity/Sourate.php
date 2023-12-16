@@ -32,6 +32,9 @@ class Sourate
     #[ORM\Column(type: Types::TEXT)]
     private ?string $originalarabictext = null;
 
+    #[ORM\Column]
+    private ?bool $isReaded = null;
+
 
 
 
@@ -98,6 +101,18 @@ class Sourate
     public function setOriginalarabictext(string $originalarabictext): static
     {
         $this->originalarabictext = $originalarabictext;
+
+        return $this;
+    }
+
+    public function isIsReaded(): ?bool
+    {
+        return $this->isReaded;
+    }
+
+    public function setIsReaded(bool $isReaded): static
+    {
+        $this->isReaded = $isReaded;
 
         return $this;
     }
