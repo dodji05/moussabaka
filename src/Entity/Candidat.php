@@ -43,11 +43,13 @@ class Candidat
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $localite = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $ecoleProvenance = null;
+
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
+
+    #[ORM\ManyToOne(inversedBy: 'candidats')]
+    private ?EcoledeProvenance $ecoledeProvenance = null;
 
     public function __construct()
     {
@@ -185,17 +187,7 @@ class Candidat
         return $this;
     }
 
-    public function getEcoleProvenance(): ?string
-    {
-        return $this->ecoleProvenance;
-    }
 
-    public function setEcoleProvenance(?string $ecoleProvenance): self
-    {
-        $this->ecoleProvenance = $ecoleProvenance;
-
-        return $this;
-    }
 
     public function getPhoto(): ?string
     {
@@ -205,6 +197,18 @@ class Candidat
     public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getEcoledeProvenance(): ?EcoledeProvenance
+    {
+        return $this->ecoledeProvenance;
+    }
+
+    public function setEcoledeProvenance(?EcoledeProvenance $ecoledeProvenance): static
+    {
+        $this->ecoledeProvenance = $ecoledeProvenance;
 
         return $this;
     }

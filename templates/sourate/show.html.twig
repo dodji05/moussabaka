@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sourate{% endblock %}
+
+{% block body %}
+    <h1>Sourate</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sourate.id }}</td>
+            </tr>
+            <tr>
+                <th>Surahnumber</th>
+                <td>{{ sourate.surahnumber }}</td>
+            </tr>
+            <tr>
+                <th>Surahnamearabic</th>
+                <td>{{ sourate.surahnamearabic }}</td>
+            </tr>
+            <tr>
+                <th>Surahnameenglish</th>
+                <td>{{ sourate.surahnameenglish }}</td>
+            </tr>
+            <tr>
+                <th>Ayahnumber</th>
+                <td>{{ sourate.ayahnumber }}</td>
+            </tr>
+            <tr>
+                <th>Originalarabictext</th>
+                <td>{{ sourate.originalarabictext }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sourate_index') }}">back to list</a>
+
+    <a href="{{ path('app_sourate_edit', {'id': sourate.id}) }}">edit</a>
+
+    {{ include('sourate/_delete_form.html.twig') }}
+{% endblock %}

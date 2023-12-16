@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Sourate{% endblock %}
+
+{% block body %}
+    <h1>Edit Sourate</h1>
+
+    {{ include('sourate/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_sourate_index') }}">back to list</a>
+
+    {{ include('sourate/_delete_form.html.twig') }}
+{% endblock %}

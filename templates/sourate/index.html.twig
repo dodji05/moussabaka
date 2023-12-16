@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sourate index{% endblock %}
+
+{% block body %}
+    <h1>Sourate index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Surahnumber</th>
+                <th>Surahnamearabic</th>
+                <th>Surahnameenglish</th>
+                <th>Ayahnumber</th>
+                <th>Originalarabictext</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sourate in sourates %}
+            <tr>
+                <td>{{ sourate.id }}</td>
+                <td>{{ sourate.surahnumber }}</td>
+                <td>{{ sourate.surahnamearabic }}</td>
+                <td>{{ sourate.surahnameenglish }}</td>
+                <td>{{ sourate.ayahnumber }}</td>
+                <td>{{ sourate.originalarabictext }}</td>
+                <td>
+                    <a href="{{ path('app_sourate_show', {'id': sourate.id}) }}">show</a>
+                    <a href="{{ path('app_sourate_edit', {'id': sourate.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_sourate_new') }}">Create new</a>
+{% endblock %}
