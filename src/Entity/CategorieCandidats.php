@@ -24,6 +24,12 @@ class CategorieCandidats
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Candidat::class)]
     private Collection $candidats;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $debutSourate = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $finSourate = null;
+
     public function __construct()
     {
         $this->candidats = new ArrayCollection();
@@ -84,6 +90,30 @@ class CategorieCandidats
                 $candidat->setCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDebutSourate(): ?string
+    {
+        return $this->debutSourate;
+    }
+
+    public function setDebutSourate(string $debutSourate): self
+    {
+        $this->debutSourate = $debutSourate;
+
+        return $this;
+    }
+
+    public function getFinSourate(): ?string
+    {
+        return $this->finSourate;
+    }
+
+    public function setFinSourate(?string $finSourate): self
+    {
+        $this->finSourate = $finSourate;
 
         return $this;
     }
