@@ -1,6 +1,48 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}EcoledeProvenance index{% endblock %}#}
+
+{#{% block body %}#}
+{#    <h1>EcoledeProvenance index</h1>#}
+
+{#    <table class="table">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Id</th>#}
+{#                <th>Nom</th>#}
+{#                <th>Localite</th>#}
+{#                <th>Email</th>#}
+{#                <th>Telephone</th>#}
+{#                <th>actions</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for ecolede_provenance in ecolede_provenances %}#}
+{#            <tr>#}
+{#                <td>{{ ecolede_provenance.id }}</td>#}
+{#                <td>{{ ecolede_provenance.nom }}</td>#}
+{#                <td>{{ ecolede_provenance.localite }}</td>#}
+{#                <td>{{ ecolede_provenance.email }}</td>#}
+{#                <td>{{ ecolede_provenance.telephone }}</td>#}
+{#                <td>#}
+{#                    <a href="{{ path('app_ecolede_provenance_show', {'id': ecolede_provenance.id}) }}">show</a>#}
+{#                    <a href="{{ path('app_ecolede_provenance_edit', {'id': ecolede_provenance.id}) }}">edit</a>#}
+{#                </td>#}
+{#            </tr>#}
+{#        {% else %}#}
+{#            <tr>#}
+{#                <td colspan="6">no records found</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+
+{#    <a href="{{ path('app_ecolede_provenance_new') }}">Create new</a>#}
+{#{% endblock %}#}
+
 {% extends 'base.html.twig' %}
 
-{% block titre %} Categorie Candidat{% endblock %}
+{% block title %}EcoledeProvenance index{% endblock %}
 
 {% block body %}
 
@@ -8,24 +50,29 @@
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title"> Liste des categorie</div>
+                    <div class="card-title"> Liste des écoles de Provenance</div>
                 </div>
                 <div class="card-body p-0">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th></th>
-                            <th>Categorie</th>
+                            <th>Numéro</th>
+                            <th>Nom</th>
+                            <th>Localité</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
 
                             <th>actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for categorie_candidat in categorie_candidats %}
+                        {% for ecolede_provenance in ecolede_provenances %}
                             <tr>
                                 <td>{{ loop.index }}</td>
-                                <td>{{ categorie_candidat.name }}</td>
-                                <td>{{ categorie_candidat.debutSourate}}</td>
+                                <td>{{ ecolede_provenance.nom }}</td>
+                                <td>{{ ecolede_provenance.localite }}</td>
+                                <td>{{ ecolede_provenance.email }}</td>
+                                <td>{{ ecolede_provenance.telephone }}</td>
 
                                 <td>
                                     {#                                <a href="{{ path('app_categorie_candidats_show', {'id': categorie_candidat.id}) }}"> #}
@@ -33,17 +80,17 @@
 
                                     {#                                    </i> #}
                                     {#                                </a> #}
-                                    <a href="{{ path('app_categorie_candidats_edit', {'id': categorie_candidat.id}) }}"
-                                       data-rec="{{ categorie_candidat.id }}" onclick="BonplanEdit(event, this)"
+                                    <a href="{{ path('app_ecolede_provenance_edit', {'id': ecolede_provenance.id}) }}"
+                                       data-rec="{{ ecolede_provenance.id}}" onclick="BonplanEdit(event, this)"
                                        class="btn btn-success">
                                         <i class="fas fa-edit">
 
                                         </i>
 
                                     </a>
-                                    <a href="{{ path('app_categorie_candidats_edit', {'id': categorie_candidat.id}) }}"
-                                       class="btn btn-danger">
-                                        <i class="fas fa-trash">
+                                    <a href="{{ path('app_ecolede_provenance_show', {'id': ecolede_provenance.id}) }}"
+                                       class="btn btn-success">
+                                        <i class="fas fa-eye">
 
                                         </i>
 
@@ -64,10 +111,10 @@
         <div class="col-md-5">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-title"> Ajouter une nouvelle categorie</div>
+                    <div class="card-title"> Ajouter une nouvelle école de Provenance</div>
                 </div>
                 <div class="card-body">
-                    {{ include('categorie_candidats/_form.html.twig') }}
+                    {{ include('ecolede_provenance/_form.html.twig') }}
                 </div>
             </div>
 
@@ -89,8 +136,8 @@
     var $autoEcoleForm = $('#edit-modal');
     // Block screen
     $modal.modal();
-    $route ="https://127.0.0.1:8000/categorie/candidats/"+$id+"/create-form"
-    $submit_route = "https://127.0.0.1:8000/categorie/candidats/"+$id+"/edit"
+    $route ="https://127.0.0.1:8000/ecolede/provenance/"+$id+"/create-form"
+    $submit_route = "https://127.0.0.1:8000/ecolede/provenance/"+$id+"/edit"
     $urlSucces = window.location.protocol + "//" + window.location.host + window.location.pathname;
 
     // Ajax request for get edit autoEcole form
@@ -110,7 +157,7 @@
     e.preventDefault();
     // Get form to submit
     // alert("html");
-    var $form = $('#categoriecircuits');
+    var $form = $('#ecolede_provenance');
     // alert($form.serialize());
     // Validate the form
     if(!formIsValide()){

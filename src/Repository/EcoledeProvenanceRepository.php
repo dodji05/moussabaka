@@ -21,6 +21,25 @@ class EcoledeProvenanceRepository extends ServiceEntityRepository
         parent::__construct($registry, EcoledeProvenance::class);
     }
 
+
+    public function save(EcoledeProvenance $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(EcoledeProvenance $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
 //    /**
 //     * @return EcoledeProvenance[] Returns an array of EcoledeProvenance objects
 //     */

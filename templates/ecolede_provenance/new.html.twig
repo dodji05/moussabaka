@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New EcoledeProvenance{% endblock %}
+
+{% block body %}
+    <h1>Create new EcoledeProvenance</h1>
+
+    {{ include('ecolede_provenance/_form.html.twig') }}
+
+    <a href="{{ path('app_ecolede_provenance_index') }}">back to list</a>
+{% endblock %}

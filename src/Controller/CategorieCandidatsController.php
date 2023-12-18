@@ -19,7 +19,6 @@ class CategorieCandidatsController extends AbstractController
         $categorieCandidat = new CategorieCandidats();
         $form = $this->createForm(CategorieCandidatsType::class, $categorieCandidat);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $categorieCandidatsRepository->save($categorieCandidat, true);
 
