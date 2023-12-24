@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Candidat;
 use App\Form\CandidatType;
 use App\Repository\CandidatRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,13 +23,25 @@ class CandidatController extends AbstractController
     }
 
     #[Route('/new', name: 'app_candidat_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CandidatRepository $candidatRepository): Response
+    public function new(Request $request, CandidatRepository $candidatRepository,FileUploader $fileUploader): Response
     {
         $candidat = new Candidat();
         $form = $this->createForm(CandidatType::class, $candidat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $oldPhoto = $candidat->getPhoto();
+
+            if ($form->get('img')->getData()) {
+                // Supprimer l'ancienne photo
+                if ($oldPhoto) {
+                    $fileUploader->remove($oldPhoto);
+                }
+                $image = $form->get('img')->getData();
+                $fichier = $fileUploader->upload($image);
+                $candidat->setPhoto($fichier);
+            }
+
             $candidatRepository->save($candidat, true);
 
             return $this->redirectToRoute('app_candidat_index', [], Response::HTTP_SEE_OTHER);
@@ -49,12 +62,26 @@ class CandidatController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_candidat_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Candidat $candidat, CandidatRepository $candidatRepository): Response
+    public function edit(Request $request, Candidat $candidat, CandidatRepository $candidatRepository,FileUploader $fileUploader): Response
     {
         $form = $this->createForm(CandidatType::class, $candidat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $oldPhoto = $candidat->getPhoto();
+
+
+            if ($form->get('img')->getData()) {
+
+                // Supprimer l'ancienne photo
+                if ($oldPhoto) {
+                    $fileUploader->remove($oldPhoto);
+                }
+
+                $image = $form->get('img')->getData();
+                $fichier = $fileUploader->upload($image);
+                $candidat->setPhoto($fichier);
+            }
             $candidatRepository->save($candidat, true);
 
             return $this->redirectToRoute('app_candidat_index', [], Response::HTTP_SEE_OTHER);
