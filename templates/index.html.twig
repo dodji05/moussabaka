@@ -163,7 +163,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Contacts</h1>
+                        <h1>Candidats</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -181,8 +181,14 @@
             <!-- Default box -->
             <div class="card card-solid">
                 <div class="card-body pb-0">
+                    {# Display the search form #}
+                    {{ form_start(searchForm) }}
+                    {{ form_row(searchForm.search) }}
+                    <button type="submit">Rechercher</button>
+                    {{ form_end(searchForm) }}
+
                     <div class="row">
-                        {% for candidat in candidats %}
+                        {% for candidat in pagination %}
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                             <div class="card bg-light d-flex flex-fill">
                                 <div class="card-header text-muted border-bottom-0">
@@ -206,9 +212,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="text-right">
-                                        <a href="#" class="btn btn-sm bg-teal">
-                                            <i class="fas fa-comments"></i>
-                                        </a>
+
                                         <a href="#" class="btn btn-sm btn-primary">
                                             <i class="fas fa-user"></i> View Profile
                                         </a>
@@ -220,19 +224,18 @@
                         {% endfor %}
 
                     </div>
+
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
                     <nav aria-label="Contacts Page Navigation">
+                        {# display navigation #}
+
                         <ul class="pagination justify-content-center m-0">
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item"><a class="page-link" href="#">7</a></li>
-                            <li class="page-item"><a class="page-link" href="#">8</a></li>
+
+                                {{ knp_pagination_render(pagination) }}
+
+
                         </ul>
                     </nav>
                 </div>
