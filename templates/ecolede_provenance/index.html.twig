@@ -1,44 +1,44 @@
-{#{% extends 'base.html.twig' %}#}
+{# {% extends 'base.html.twig' %} #}
 
-{#{% block title %}EcoledeProvenance index{% endblock %}#}
+{# {% block title %}EcoledeProvenance index{% endblock %} #}
 
-{#{% block body %}#}
-{#    <h1>EcoledeProvenance index</h1>#}
+{# {% block body %} #}
+{#    <h1>EcoledeProvenance index</h1> #}
 
-{#    <table class="table">#}
-{#        <thead>#}
-{#            <tr>#}
-{#                <th>Id</th>#}
-{#                <th>Nom</th>#}
-{#                <th>Localite</th>#}
-{#                <th>Email</th>#}
-{#                <th>Telephone</th>#}
-{#                <th>actions</th>#}
-{#            </tr>#}
-{#        </thead>#}
-{#        <tbody>#}
-{#        {% for ecolede_provenance in ecolede_provenances %}#}
-{#            <tr>#}
-{#                <td>{{ ecolede_provenance.id }}</td>#}
-{#                <td>{{ ecolede_provenance.nom }}</td>#}
-{#                <td>{{ ecolede_provenance.localite }}</td>#}
-{#                <td>{{ ecolede_provenance.email }}</td>#}
-{#                <td>{{ ecolede_provenance.telephone }}</td>#}
-{#                <td>#}
-{#                    <a href="{{ path('app_ecolede_provenance_show', {'id': ecolede_provenance.id}) }}">show</a>#}
-{#                    <a href="{{ path('app_ecolede_provenance_edit', {'id': ecolede_provenance.id}) }}">edit</a>#}
-{#                </td>#}
-{#            </tr>#}
-{#        {% else %}#}
-{#            <tr>#}
-{#                <td colspan="6">no records found</td>#}
-{#            </tr>#}
-{#        {% endfor %}#}
-{#        </tbody>#}
-{#    </table>#}
+{#    <table class="table"> #}
+{#        <thead> #}
+{#            <tr> #}
+{#                <th>Id</th> #}
+{#                <th>Nom</th> #}
+{#                <th>Localite</th> #}
+{#                <th>Email</th> #}
+{#                <th>Telephone</th> #}
+{#                <th>actions</th> #}
+{#            </tr> #}
+{#        </thead> #}
+{#        <tbody> #}
+{#        {% for ecolede_provenance in ecolede_provenances %} #}
+{#            <tr> #}
+{#                <td>{{ ecolede_provenance.id }}</td> #}
+{#                <td>{{ ecolede_provenance.nom }}</td> #}
+{#                <td>{{ ecolede_provenance.localite }}</td> #}
+{#                <td>{{ ecolede_provenance.email }}</td> #}
+{#                <td>{{ ecolede_provenance.telephone }}</td> #}
+{#                <td> #}
+{#                    <a href="{{ path('app_ecolede_provenance_show', {'id': ecolede_provenance.id}) }}">show</a> #}
+{#                    <a href="{{ path('app_ecolede_provenance_edit', {'id': ecolede_provenance.id}) }}">edit</a> #}
+{#                </td> #}
+{#            </tr> #}
+{#        {% else %} #}
+{#            <tr> #}
+{#                <td colspan="6">no records found</td> #}
+{#            </tr> #}
+{#        {% endfor %} #}
+{#        </tbody> #}
+{#    </table> #}
 
-{#    <a href="{{ path('app_ecolede_provenance_new') }}">Create new</a>#}
-{#{% endblock %}#}
+{#    <a href="{{ path('app_ecolede_provenance_new') }}">Create new</a> #}
+{# {% endblock %} #}
 
 {% extends 'base.html.twig' %}
 
@@ -81,7 +81,7 @@
                                     {#                                    </i> #}
                                     {#                                </a> #}
                                     <a href="{{ path('app_ecolede_provenance_edit', {'id': ecolede_provenance.id}) }}"
-                                       data-rec="{{ ecolede_provenance.id}}" onclick="BonplanEdit(event, this)"
+                                       data-rec="{{ ecolede_provenance.id }}" onclick="BonplanEdit(event, this)"
                                        class="btn btn-success">
                                         <i class="fas fa-edit">
 
@@ -120,6 +120,23 @@
 
         </div>
     </div>
+    <div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-body" style="position:absolute;
+                                left: 50%;
+                                top: 50%;
+                                width: 200px;
+                                margin-left: -100px;
+                                margin-top: -100px;
+                                background-color: rgba(0, 0, 0, 0);
+                                ">
+            <div class="progress progress-striped active"
+                 style="text-align: center; height: 100px; background-color: rgba(0, 0, 0, 0);">
+                <div class="bar">
+                    <i class="fas fa-circle-notch fa-spin fa-5x" style="color: #f5f5f5;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
     {% include 'modal/base_modal.html.twig' with { modalId: 'edit-modal', modalTitle: 'Modifier' } %}
 {% endblock %}
 
@@ -135,29 +152,32 @@
     var $modal = $('#pleaseWaitDialog');
     var $autoEcoleForm = $('#edit-modal');
     // Block screen
-    $modal.modal();
-    $route ="https://127.0.0.1:8000/ecolede/provenance/"+$id+"/create-form"
-    $submit_route = "https://127.0.0.1:8000/ecolede/provenance/"+$id+"/edit"
+    $modal.modal('show');
+    // $route ="https://127.0.0.1:8001/ecolede/provenance/"+$id+"/create-form"
+    $route = Routing.generate('ecole_edit', {'id' : $id })
+    // $submit_route = "https://127.0.0.1:8001/ecolede/provenance/"+$id+"/edit"
+    $submit_route = Routing.generate('app_ecolede_provenance_edit', {'id' : $id })
     $urlSucces = window.location.protocol + "//" + window.location.host + window.location.pathname;
 
     // Ajax request for get edit autoEcole form
     $.ajax({
-    url:  Routing.generate('categorie_edits', {'id' : $id }),
+    url:  Routing.generate('ecole_edit', {'id' : $id }),
     type: 'GET',
     success: function (html) {
     // Permit
     $modal.modal('hide');
     // add content to display
+     $autoEcoleForm.find('.modal-title').html("Modifier les informations de l'ecole de provenance");
 
     $autoEcoleForm.find('.modal-body').html(html);
     //  alert(html);
 
     // Add submit link to finish
-    var $submit = $("<input type='button' class ='btn btn-primary float-lg-right' value='Modifier la categorie' />").on('click', function (e) {
+    var $submit = $("<input type='button' class ='btn btn-primary float-lg-right' value='Modifier les informations' />").on('click', function (e) {
     e.preventDefault();
     // Get form to submit
     // alert("html");
-    var $form = $('#ecolede_provenance');
+    var $form = $('#categoriecircuits');
     // alert($form.serialize());
     // Validate the form
     if(!formIsValide()){
@@ -176,10 +196,12 @@
 
 })
     .done(function (data) {
-          console.log(data);
+          console.log(data.success);
+           alert(data.success)
     if(!data.success){
     console.log(JSON.stringify(data.errors));
-     alert(JSON.stringify(data.errors))
+     // alert(JSON.stringify(data))
+       window.location.href = $urlSucces;
 }else{
     // Redirect to Home page
     window.location.href = $urlSucces;

@@ -31,7 +31,7 @@ class CategorieCandidatsController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_categorie_candidats_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_categorie_candidats_new', options: ["expose" => true], methods: ['GET', 'POST'])]
     public function new(Request $request, CategorieCandidatsRepository $categorieCandidatsRepository): Response
     {
         $categorieCandidat = new CategorieCandidats();
@@ -58,7 +58,7 @@ class CategorieCandidatsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_categorie_candidats_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_categorie_candidats_edit', options: ["expose" => true], methods: ['GET', 'POST'])]
     public function edit(Request $request, CategorieCandidats $categorieCandidat, CategorieCandidatsRepository $categorieCandidatsRepository): Response
     {
         $form = $this->createForm(CategorieCandidatsType::class, $categorieCandidat);
@@ -66,6 +66,7 @@ class CategorieCandidatsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $categorieCandidatsRepository->save($categorieCandidat, true);
+            $this->addFlash('success', "la categorie a ete modifier avec success ");
 
             return $this->redirectToRoute('app_categorie_candidats_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -90,7 +91,7 @@ class CategorieCandidatsController extends AbstractController
     /**
      * @Route("/{id}/create-form", name="categorie_edits",options={"expose"=true})
      */
-    #[Route('/{id}/create-form', name: 'categorie_editss', options: ['true'], methods: ['POST'])]
+    #[Route('/{id}/create-form', name: 'categorie_edit', options: ["expose" => true], methods: ['POST'])]
     public function ajaxEditFormAction(Request $request, CategorieCandidats $categorieCandidats)
     {
         $editForm = $this->createForm(CategorieCandidatsType::class,  $categorieCandidats);

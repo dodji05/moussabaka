@@ -59,7 +59,7 @@ class EcoledeProvenanceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_ecolede_provenance_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_ecolede_provenance_edit', options: ["expose" => true], methods: ['GET', 'POST'])]
     public function edit(Request $request, EcoledeProvenance $ecoledeProvenance, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(EcoledeProvenanceType::class, $ecoledeProvenance);
@@ -87,4 +87,21 @@ class EcoledeProvenanceController extends AbstractController
 
         return $this->redirectToRoute('app_ecolede_provenance_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+     * @Route("/{id}/create-form", name="ecole_edits",options={"expose"=true})
+     */
+    #[Route('/{id}/create-form', name: 'ecole_edit', options: ["expose" => true])]
+    public function ajaxEditFormAction(Request $request, EcoledeProvenance $ecoledeProvenance)
+    {
+        $editForm =  $this->createForm(EcoledeProvenanceType::class, $ecoledeProvenance);
+
+        return $this->render('modal/modal_edit.html.twig', array(
+            'Categories' =>  $ecoledeProvenance,
+            'isModal' => true,
+            'single' => true,
+            'form' => $editForm->createView(),
+        ));
+    }
+
 }
