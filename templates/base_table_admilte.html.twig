@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+{% block css %}
+    <!-- DataTables -->
+    <link rel="stylesheet"
+          href="{{ asset('assets/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ asset('assets/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ asset('assets/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+{% endblock %}
+ {% block actionbtn %}
+     <div class="container-fluid">
+         <div class="row mb-2">
+             <div class="col-sm-6">
+                 {#                        <h1>{% block titles %} Departement{% endblock %}</h1> #}
+             </div>
+             <div class="col-sm-12">
+
+                 <a href=" {% block btnapath %} {% endblock %}" class="btn btn-outline-primary float-right"><i
+                             class="fa fa-plus"></i>
+                     {% block btntitle %}
+
+                     {% endblock %}
+                 </a>
+             </div>
+         </div>
+     </div><!-- /.container-fluid -->
+ {% endblock %}
+{% block body %}
+    <div class="card card-primary card-success">
+        <div class="card-header">
+            <h3 class="card-title ">
+                {% block card_header_title %}
+
+                {% endblock %}
+            </h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                {% block tablecontent %}
+                {% endblock %}
+            </table>
+
+
+        </div>
+        <!-- /.card-body -->
+    </div>
+{% endblock %}
+{% block javascript %}
+<!-- DataTables  & Plugins -->
+
+<script src="{{ asset('assets/adminlte/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('assets/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+</script>
+
+{% endblock %}
+

@@ -1,0 +1,79 @@
+{% extends 'base_table_admilte.html.twig' %}
+
+{% block title %} Utilisateurs {% endblock %}
+{% block titlecss %}Liste des utilisateurs  {% endblock %}
+ {% block btntitle %}
+      Ajouter un utilisateur
+ {% endblock %}
+{% block btnapath %} {{ path('app_register') }} {% endblock %}
+{% block card_header_title %} Liste des utilisateurs{% endblock %}
+{% block tablecontent %}
+
+    <thead>
+    <tr>
+        <th>N°</th>
+        <th>Nom</th>
+        <th>Prenoms</th>
+        <th>Email</th>
+        <th>Statut</th>
+        <th>Roles</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ user.nom }}</td>
+            <td>{{ user.prenoms }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.isActif ? 'Actif' : 'Désactivé' }}</td>
+            <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            <td>
+                <div class="margin">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-flat">Action</button>
+                        <button type="button"
+                                class="btn btn-default btn-flat dropdown-toggle dropdown-icon"
+                                data-toggle="dropdown">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu" role="menu">
+{#                            <a class="dropdown-item"#}
+{#                               href="{{ path('app_user_show', {'id': user.id}) }}"><i#}
+{#                                        class="fas fa-eye" style="color: #28a745;"></i>Voir</a>#}
+                            <a class="dropdown-item"
+                               href="{{ path('app_user_edit', {'id': user.id}) }}"><i
+                                        class="fas fa-edit" style="color: #17a2b8;"></i>
+                                Modifier </a>
+                            <a class="dropdown-item"
+                               href="{{ path('reset_password_by_admin', {'id': user.id}) }}"><i
+                                        class="fa fa-key" style="color: #dc3545;"></i> Renitialiser mot de passe</a>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">Aucune donnée disponible</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <th>N°</th>
+        <th>Nom</th>
+        <th>Prenoms</th>
+        <th>Email</th>
+        <th>Statut</th>
+        <th>Roles</th>
+        <th>actions</th>
+
+    </tr>
+    </tfoot>
+
+{% endblock %}

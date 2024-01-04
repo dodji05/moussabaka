@@ -43,6 +43,8 @@ class CandidatController extends AbstractController
             }
 
             $candidatRepository->save($candidat, true);
+            $this->addFlash('success', "Le candidat :" .$candidat->getFullName() ."  a été ajouté avec succès ");
+
 
             return $this->redirectToRoute('app_candidat_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -83,6 +85,8 @@ class CandidatController extends AbstractController
                 $candidat->setPhoto($fichier);
             }
             $candidatRepository->save($candidat, true);
+            $this->addFlash('success', "Le candidat :" .$candidat->getFullName() ."  a été mis à jour  avec succès ");
+
 
             return $this->redirectToRoute('app_candidat_index', [], Response::HTTP_SEE_OTHER);
         }

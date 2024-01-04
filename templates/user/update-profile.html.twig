@@ -1,0 +1,447 @@
+
+{% extends 'base.html.twig' %}
+
+{% block titlecss %}Modification Profil{% endblock %}
+ {% block btntitle %}
+     Modification du Profil de :{{ app.user.fullName }}
+ {% endblock %}
+{% block body %}
+<div class="card card-success">
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+
+                <!-- Profile Image -->
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="{{ asset('uploads/visites/piece/' ~app.user.photo) }}"
+                                 alt="User profile picture">
+                        </div>
+
+                        <h3 class="profile-username text-center">{{ app.user.fullName }}</h3>
+
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </div>
+
+
+            <div class="col-md-9">
+                <div class="card">
+
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link " href="#settings" data-toggle="tab">Mon Profil</a></li>
+                            <li class="nav-item"><a class="nav-link {% if app.user %} active {% endif %}" href="#activity" data-toggle="tab">Réinitialisation de Mot de passe</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="settings">
+                                {{ form_start(form,{'attr':{'class':'form theme-form','novalidate': 'novalidate'}}) }}
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    {{ form_row(form.nom,{'attr': {'class': 'form-control btn-pill' }}) }}
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    {{ form_row(form.prenoms,{'attr': {'class': 'form-control btn-pill' }}) }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    {{ form_row(form.email,{'attr': {'class': 'form-control btn-pill' }}) }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    {{ form_row(form.img,{'attr': {'class': 'form-control btn-pill' }}) }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <div class="col-sm-2"></div>
+                                                                        <div class="col-sm-offset-2 col-sm-12">
+                                                                            <button type="submit" class="btn btn-block btn-primary">Enregistrer</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    {{ form_end(form) }}
+
+
+
+
+
+                            </div>
+                            <div class="tab-pane" id="activity">
+                                {{ form_start(form_reset,{'attr':{'class':'form theme-form','novalidate': 'novalidate'}}) }}
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    {{ form_row(form_reset.oldPassword,{'attr': {'class': 'form-control btn-pill' }}) }}
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    {{ form_row(form_reset.newPassword,{'attr': {'class': 'form-control btn-pill' }}) }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col">
+                                                                                <div class="mb-3">
+                                                                                    {{ form_row(form_reset.confirmPassword,{'attr': {'class': 'form-control btn-pill' }}) }}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-offset-2 col-sm-12">
+                                        <button type="submit" class="btn btn-block btn-primary">Enregistrer</button>
+                                    </div>
+                                </div>
+
+                                {{ form_end(form_reset) }}
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- /.col -->
+{#            <div class="col-md-9">#}
+{#                <div class="card">#}
+{#                    <div class="card-header p-2">#}
+{#                        <ul class="nav nav-pills">#}
+{#                            <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Mon Compte</a></li>#}
+{#                            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Réinitialisation votre mot de passe</a></li>#}
+
+{#                        </ul>#}
+{#                    </div><!-- /.card-header -->#}
+{#                    <div class="card-body">#}
+{#                        <div class="tab-content">#}
+{#                            <div class="active tab-pane" id="activity">#}
+{#                                <!-- Post -->#}
+
+{#                                <div class="card card-success">#}
+{#                                    <div class="card-header">#}
+{#                                        <h5>Modification du Profil de :{{ app.user.fullName }}</h5>#}
+{#                                    </div>#}
+{#                                    {{ form_start(form,{'attr':{'class':'form theme-form','novalidate': 'novalidate'}}) }}#}
+{#                                    <div class="card-body">#}
+{#                                        <div class="row">#}
+{#                                            <div class="col">#}
+{#                                                <div class="mb-3">#}
+{#                                                    {{ form_row(form.nom,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="row">#}
+{#                                            <div class="col">#}
+{#                                                <div class="mb-3">#}
+{#                                                    {{ form_row(form.prenoms,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="row">#}
+{#                                            <div class="col">#}
+{#                                                <div class="mb-3">#}
+{#                                                    {{ form_row(form.telephone,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="row">#}
+{#                                            <div class="col">#}
+{#                                                <div class="mb-3">#}
+{#                                                    {{ form_row(form.email,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="row">#}
+{#                                            <div class="col">#}
+{#                                                <div class="mb-3">#}
+{#                                                    {{ form_row(form.poste,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="row">#}
+{#                                            <div class="col">#}
+{#                                                <div class="mb-3">#}
+{#                                                    {{ form_row(form.departement,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+
+{#                                    </div>#}
+{#                                    <div class="card-footer">#}
+{#                                        <div class="float-right">#}
+{#                                            <button class="btn btn-success" type="submit"> <i class="fa fa-check"></i> Enregistrer</button>#}
+{#                                            <button class="btn btn-warning" type="reset" value="Annuler"><i class="fa fa-times"></i> Annuler</button>#}
+{#                                        </div>#}
+
+{#                                    </div>#}
+{#                                    {{ form_end(form) }}#}
+
+
+
+{#                                <!-- /.post -->#}
+{#                            </div>#}
+{#                            <!-- /.tab-pane -->#}
+
+{#                            <!-- /.tab-pane -->#}
+
+
+{#                    <div class="card-body">#}
+
+{#                            <div class="active tab-pane" id="timeline">#}
+{#                                <!-- Post -->#}
+
+{#                                <div class="card card-success">#}
+{#                                    <div class="card-header">#}
+{#                                        <h5>Modification du mot de passe de :{{ app.user.fullName }}</h5>#}
+{#                                    </div>#}
+{#                                    {{ form_start(form_reset,{'attr':{'class':'form theme-form','novalidate': 'novalidate'}}) }}#}
+{#                                    <div class="card-body">#}
+{#                                        <div class="row">#}
+{#                                            <div class="col">#}
+{#                                                <div class="mb-3">#}
+{#                                                    {{ form_row(form_reset.oldPassword,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="row">#}
+{#                                            <div class="col">#}
+{#                                                <div class="mb-3">#}
+{#                                                    {{ form_row(form_reset.newPassword,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                        <div class="row">#}
+{#                                            <div class="col">#}
+{#                                                <div class="mb-3">#}
+{#                                                    {{ form_row(form_reset.confirmPassword,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+
+
+{#                                    </div>#}
+{#                                    <div class="card-footer">#}
+{#                                        <div class="float-right">#}
+{#                                            <button class="btn btn-success" type="submit"> <i class="fa fa-check"></i> Modifier votre mot de Passe</button>#}
+{#                                            <button class="btn btn-warning" type="reset" value="Annuler"><i class="fa fa-times"></i> Annuler</button>#}
+{#                                        </div>#}
+
+{#                                    </div>#}
+{#                                    {{ form_end(form_reset) }}#}
+
+{#                                </div>#}
+
+{#                                <!-- /.post -->#}
+{#                            </div>#}
+{#                            <!-- /.tab-pane -->#}
+
+{#                            <!-- /.tab-pane -->#}
+{#                        </div>#}
+{#                        <!-- /.tab-content -->#}
+{#                    </div><!-- /.card-body -->#}
+
+
+
+{#                    <!-- /.card-body -->#}
+{#                <!-- /.card -->#}
+
+{#            <!-- /.col -->#}
+{#        </div>#}
+{#        <!-- /.row -->#}
+{#    </div><!-- /.container-fluid -->#}
+{#                </div>#}
+{#            </div>#}
+        </div>
+    </div>
+</section>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#    <div class="container-fluid">#}
+{#        <div class="page-title">#}
+{#            <div class="row">#}
+{#                <div class="col-12">#}
+{#                    <h3 align="center">Edition du  Profil de l'utilisateur: {{ user.fullname }}</h3>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <!-- Container-fluid starts-->#}
+{#    <div class="container-fluid">#}
+{#        <div class="edit-profile">#}
+{#            <div class="row">#}
+{#                <div class="col-xl-4">#}
+{#                   #}{# <div class="card">#}
+{#                        <div class="card-header">#}
+{#                            <h4 class="card-title mb-0">My Profile</h4>#}
+{#                            <div class="card-options">#}
+{#                                <a class="card-options-collapse" href="#" data-bs-toggle="card-collapse">#}
+{#                                    <i class="fe fe-chevron-up"></i>#}
+{#                                </a>#}
+{#                                <a class="card-options-remove" href="#" data-bs-toggle="card-remove">#}
+{#                                    <i class="fe fe-x"></i>#}
+{#                                </a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="card-body">#}
+{#                            <form>#}
+{#                                <div class="row mb-2">#}
+{#                                    <div class="profile-title">#}
+{#                                        <div class="media">#}
+{#                                            <img class="img-70 rounded-circle" alt="" src="{{ asset('assets/images/user/7.jpg') }}">#}
+{#                                            <div class="media-body">#}
+{#                                                <h5 class="mb-1">MARK JECNO</h5>#}
+{#                                                <p>DESIGNER</p>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="mb-3">#}
+{#                                    <h6 class="form-label">Bio</h6>#}
+{#                                    <textarea class="form-control" rows="5">On the other hand, we denounce with righteous indignation</textarea>#}
+{#                                </div>#}
+{#                                <div class="mb-3">#}
+{#                                    <label class="form-label">Email-Address</label>#}
+{#                                    <input class="form-control" placeholder="your-email@domain.com">#}
+{#                                </div>#}
+{#                                <div class="mb-3">#}
+{#                                    <label class="form-label">Password</label>#}
+{#                                    <input class="form-control" type="password" value="password">#}
+{#                                </div>#}
+{#                                <div class="mb-3">#}
+{#                                    <label class="form-label">Website</label>#}
+{#                                    <input class="form-control" placeholder="http://Uplor .com">#}
+{#                                </div>#}
+{#                                <div class="form-footer">#}
+{#                                    <button class="btn btn-primary btn-block">Save</button>#}
+{#                                </div>#}
+{#                            </form>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#                <div class="col-xl-8 offset-sm-2">#}
+{#                    {{ form_start(form,{'attr':{'class':'card','novalidate': 'novalidate'}}) }}#}
+
+{#                        <div class="card-header">#}
+{#                            <h4 class="card-title mb-0">Edition de Mon Profil</h4>#}
+{#                            <div class="card-options">#}
+{#                                <a class="card-options-collapse" href="#" data-bs-toggle="card-collapse">#}
+{#                                    <i class="fe fe-chevron-up"></i>#}
+{#                                </a>#}
+{#                                <a class="card-options-remove" href="#" data-bs-toggle="card-remove">#}
+{#                                    <i class="fe fe-x"></i>#}
+{#                                </a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="card-body">#}
+{#                            <div class="row">#}
+{#                                <div class="col-md-5">#}
+{#                                    <div class="mb-6">#}
+
+{#                                        {{ form_row(form.nom,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6 col-md-6">#}
+{#                                    <div class="mb-3">#}
+{#                                        {{ form_row(form.prenoms,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6 col-md-6">#}
+{#                                    <div class="mb-3">#}
+{#                                        {{ form_row(form.telephone,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6 col-md-6">#}
+{#                                    <div class="mb-3">#}
+{#                                        {{ form_row(form.email,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6 col-md-6">#}
+{#                                    <div class="mb-3">#}
+{#                                        {{ form_row(form.poste,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-sm-6 col-md-6">#}
+{#                                    <div class="mb-3">#}
+{#                                        {{ form_row(form.departement,{'attr': {'class': 'form-control btn-pill' }}) }}#}
+
+{#                                    </div>#}
+{#                                </div>#}
+
+{#                                </div>#}
+{#                            </div>#}
+{#                    <div class="card-footer text-end">#}
+{#                        <button class="btn btn-primary" type="submit">Modifier Profil</button>#}
+{#                    </div>#}
+{#                        </div>#}
+
+{#                        {{ form_end(form) }}#}
+
+{#                </div>#}
+
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('assets/js/tooltip-init.js') }}"></script>
+{% endblock %}

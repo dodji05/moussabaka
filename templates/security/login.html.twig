@@ -1,31 +1,117 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% extends "layout_auth.html.twig" %}
 
-{% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+{% block authcontent %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+    <div class="card-body login-card-body">
+        {% if hasError %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            {% if user not in users %}
+                <div class=" alert-danger">
+                    <p><strong>Ce email n'existe pas. Veuillez reessayer!</strong>.
+                    </p>
+                </div>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+            {% elseif user.isActif == false %}
+                <p class=" alert-danger">
+                    <strong>Votre compte n'est pas actif. Veuillez contacter l'Administrateur système de la Plateforme
+                        !.</strong></p>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+            {% else %}
+
+                <div class=" alert-danger">
+                    <p>
+                        <strong>Vos informations que vous avez fournies ne sont pas bonnes </strong>.
+                    </p>
+                </div>
+            {% endif %}
+
+        {% endif %}
+        <p class="login-box-msg">Connectez-vous à votre compte!</p>
+        <p>Entrez votre email & mot de passe pour se connecter </p>
+
+        <form method="post">
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+            <div class="input-group mb-12">
+                <input type="email" class="form-control" placeholder="Email " name="email">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-12">
+                <input type="password" class="form-control" placeholder="Mot de Passe"
+                       name="password">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="icheck-primary">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">
+                            Se souvenir de moi!
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit"
+                            class="btn btn-primary btn-block">Se Connecter</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+
+        <p class="mb-1">
+            <a href="{{ path('app_forgot_password_request') }}">Mot de passe Oublié?</a>
+        </p>
+        {#                <p class="mb-0"> #}
+        {#                    <a href="register.html" class="text-center">Register a new membership</a> #}
+        {#                </p> #}
+    </div>
 {% endblock %}
+
+
+
+
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Log in!{% endblock %}#}
+
+{#{% block body %}#}
+{#<form method="post">#}
+{#    {% if error %}#}
+{#        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>#}
+{#    {% endif %}#}
+
+{#    {% if app.user %}#}
+{#        <div class="mb-3">#}
+{#            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>#}
+{#        </div>#}
+{#    {% endif %}#}
+
+{#    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>#}
+{#    <label for="inputEmail">Email</label>#}
+{#    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>#}
+{#    <label for="inputPassword">Password</label>#}
+{#    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>#}
+
+{#    <input type="hidden" name="_csrf_token"#}
+{#           value="{{ csrf_token('authenticate') }}"#}
+{#    >#}
+
+{#    <button class="btn btn-lg btn-primary" type="submit">#}
+{#        Sign in#}
+{#    </button>#}
+{#</form>#}
+{#{% endblock %}#}

@@ -212,4 +212,7 @@ class Candidat
 
         return $this;
     }
+    public function getFullName() {
+        return "{$this->prenom} {$this->mom}";
+    }
 }

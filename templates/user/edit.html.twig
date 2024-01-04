@@ -1,0 +1,80 @@
+{#{% extends 'base.html.twig' %}#}
+
+{#{% block title %}Edit User{% endblock %}#}
+
+{#{% block body %}#}
+{#    <h1>Edit User</h1>#}
+
+{#    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}#}
+
+{#    <a href="{{ path('app_user_index') }}">back to list</a>#}
+
+{#    {{ include('user/_delete_form.html.twig') }}#}
+{#{% endblock %}#}
+
+{% extends 'base_table_admilte.html.twig' %}
+{% block titlecss %} Gestion des utilisateurs - Modification {% endblock %}
+{% block title %}Gestion des utilisateurs {% endblock %}
+
+{% block body %}
+
+
+    <div class="card card-success">
+        <div class="card-header">
+            <h5 align="center">{% trans %}Modification du compte de l'utilisateur {% endtrans%}: {{ user.fullname }}</h5>
+        </div>
+        {{ form_start(form,{'attr':{'class':'form theme-form','novalidate': 'novalidate'}}) }}
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        {{ form_row(form.nom,{'attr': {'class': 'form-control btn-pill' }}) }}
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        {{ form_row(form.prenoms,{'attr': {'class': 'form-control btn-pill' }}) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        {{ form_row(form.email,{'attr': {'class': 'form-control btn-pill' }}) }}
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-form-label">
+                    {{ form_row(form.roles,{'attr': {'class': 'js-example-basic-multiple col-sm-12' }}) }}
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col">
+                    <div class="mb-3">
+                        {{ form_row(form.isActif,{'attr': {'class': 'form-control' }}) }}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer text-end">
+            <div class="float-right">
+                <a class="btn btn-primary" type="button" href="{{ path('app_user_index') }}">
+                    <i class="fa fa-arrow-left"></i> {% trans %}Retour à la liste des Utilisateurs{% endtrans %}</a>
+
+                <button class="btn btn-success" type="submit"> <i class="fa fa-check"></i> {% trans %}Modifier{% endtrans %}</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}

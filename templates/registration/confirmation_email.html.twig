@@ -1,0 +1,50 @@
+{#<h1>Hi! Please confirm your email!</h1>#}
+
+{#<p>#}
+{#    Please confirm your email address by clicking the following link: <br><br>#}
+{#    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.#}
+{#    This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.#}
+{#</p>#}
+
+{#<p>#}
+{#    Cheers!#}
+{#</p>#}
+{% apply inline_css(source("@styles/vendors/bootstrap/bootstrap.css")) %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <p>Bonjour Monsieur/Madame {{ user.fullname }}. Votre compte a été crée. Les informations sont les suivantes. SVP!
+
+                Veuillez  <a href="#">cliquez ici</a> pour changer le mot de passe.
+            </p>
+            <table>
+                <tbody>
+
+                <tr>
+                    <th>Nom et Prénoms:</th>
+                    <td>{{ user.fullName }}</td>
+                </tr>
+
+                <tr>
+                    <th>Email:</th>
+                    <td>{{ user.email }}</td>
+                </tr>
+                <tr>
+                    <th>Mot de Passe: </th>
+                    <td>{{ password }}</td>
+                </tr>
+
+                <tr>
+                    <th>Lien de Connexion: </th>
+                    <td><a href="{{ url('app_login')  }}"> Se connecter </a> </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+{% endapply %}
