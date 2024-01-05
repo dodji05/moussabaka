@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidat;
 use App\Form\SearchType;
 use App\Repository\CandidatRepository;
+use App\Repository\SourateRepository;
 use Knp\Component\Pager\PaginatorInterface;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,8 +30,8 @@ class IndexController extends AbstractController
             // Modify the queryBuilder to include your search logic
             if ($searchTerm) {
                 $queryBuilder
-                    ->innerJoin('c.categorie','s')
-                    ->innerJoin('c.ecoledeProvenance','e')
+                    ->innerJoin('c.categorie', 's')
+                    ->innerJoin('c.ecoledeProvenance', 'e')
                     ->orWhere('c.mom LIKE :searchTerm')
                     ->orWhere('c.prenom LIKE :searchTerm')
                     ->orWhere('c.numeroCandidat LIKE :searchTerm')
@@ -70,4 +72,42 @@ class IndexController extends AbstractController
 //
 //        ]);
 //    }
+
+    #[Route('/questions-series/{id}/candidats', name: 'app_questions_serie')]
+    public function selectSerieQuestion(Candidat $candidat, CandidatRepository $candidatRepository, PaginatorInterface $paginator, Request $request): Response
+
+    {
+        $debutSourate = (int)$candidat->getCategorie()->getDebutSourate();
+        $numbers = range($debutSourate, 114);
+        shuffle($numbers);
+        $Sourate = array_slice($numbers, 1, 3);
+        return $this->render('choix_serie_question.html.twig', [
+            'candidat' => $candidat,
+            'sourate' => $Sourate
+        ]);
+    }
+
+    #[Route('/questions-list/{id}/candidats/{sourate}/sourate', name: 'app_questions_liste')]
+    public function questions(Candidat $candidat, SourateRepository $sourateRepository, PaginatorInterface $paginator, Request $request): Response
+
+    {
+        $sourate = $request->get('sourate');
+
+        $totalVerset = $sourateRepository->verset($sourate);
+        $numbers = range(1, $totalVerset);
+        shuffle($numbers);
+        $Verset = array_slice($numbers, 1, 3);
+
+        $v = $sourateRepository->findBy(['surahnumber' => $sourate, 'ayahnumber' => $Verset, 'isReaded' => false]);
+//        dd( $sourate, $totalVerset,$numbers ,$Verset,   $v   );
+//        $Sourate =  array_slice( $numbers,1,3);
+        return $this->render('serie_question.html.twig', [
+            'candidat' => $candidat,
+            'versets' => $v,
+            'sourate'=>$sourate
+
+        ]);
+    }
+
+
 }

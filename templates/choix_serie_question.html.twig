@@ -1,0 +1,50 @@
+{% extends 'base_front.html.twig' %}
+{% block header_title %} Choix de serie de question {% endblock %}
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card card-solid">
+                    <div class="card-body pb-0">
+                        {% dump(sourate[0]) %}
+                        <h3>{{ candidat.mom }}  {{ candidat.prenom }} veuillez choisir une serie de question</h3>
+                        <div class="mb-3"></div>
+                        <a href="{{ path('app_questions_liste',{'id':candidat.id,'sourate':sourate[0]}) }}">
+                            <div class="info-box mb-3 bg-info">
+                                <span class="info-box-icon"><i class="far fa-comment"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Serie de question 1</span>
+
+                                </div>
+
+                            </div>
+                        </a>
+                        <a href="{{ path('app_questions_liste',{'id':candidat.id,'sourate':sourate[1]}) }}">
+                            <div class="info-box mb-3 bg-success">
+                                <span class="info-box-icon"><i class="far fa-comment"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Serie de question 2</span>
+
+                                </div>
+
+                            </div>
+                        </a>
+                        <a href="{{ path('app_questions_liste',{'id':candidat.id,'sourate':sourate[2]}) }}">
+                            <div class="info-box mb-3 bg-warning">
+                                <span class="info-box-icon"><i class="far fa-comment"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Serie de question 3</span>
+
+                                </div>
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -50,10 +50,9 @@ class SourateRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->select('MAX(s.ayahnumber) AS max')
-            ->addSelect('MIN(s.ayahnumber) AS min')
             ->andWhere('s.surahnumber = :val')
             ->setParameter('val', $sourate)
             ->getQuery()
-            ->getResult();
+            ->getSingleScalarResult();
     }
 }
