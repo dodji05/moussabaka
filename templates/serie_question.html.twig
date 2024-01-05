@@ -8,13 +8,14 @@
                 <div class="card card-solid">
                     <div class="card-body pb-0">
                         <h3>{{ candidat.mom }}  {{ candidat.prenom }} Voici la liste des questions</h3>
-                        <h3>Sourate :   {{ sourate }}  </h3>
+
                         <div class="mb-3"></div>
-                        {% for verset in versets %}
+                        {% for verset in versets  %}
                             <div class="info-box mb-3 bg-success">
                                 <span class="info-box-icon"><i class="far fa-comment"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text" style="font-size: 24px"> verset {{ verset.ayahnumber }}</span>
+                                    <span class="info-box-text" style="font-size: 24px"> Sourate {{ verset.surahnumber }} : {{ verset.surahnamearabic }}</span>
+                                    <span class="info-box-text" style="font-size: 20px"> verset {{ verset.ayahnumber }}</span>
                                     <span class="info-box-text"> {{ verset.originalarabictext }}</span>
 
                                 </div>

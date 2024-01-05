@@ -91,20 +91,19 @@ class IndexController extends AbstractController
     public function questions(Candidat $candidat, SourateRepository $sourateRepository, PaginatorInterface $paginator, Request $request): Response
 
     {
-        $sourate = $request->get('sourate');
+        // debut de Sourate de la categorie de l'eleve
+        $debutSourate = (int)$candidat->getCategorie()->getDebutSourate();
 
-        $totalVerset = $sourateRepository->verset($sourate);
-        $numbers = range(1, $totalVerset);
-        shuffle($numbers);
-        $Verset = array_slice($numbers, 1, 3);
+        // intervalle de Sourates de la categorie de l'eleve
+        $intervalleSourate = range($debutSourate, 114);
+        $listeSourate = $sourateRepository->findBy(['surahnumber' =>  $intervalleSourate, 'isReaded' => false]);
+        shuffle($listeSourate);
+        $listeQuestions =  array_slice( $listeSourate,0,3);
 
-        $v = $sourateRepository->findBy(['surahnumber' => $sourate, 'ayahnumber' => $Verset, 'isReaded' => false]);
-//        dd( $sourate, $totalVerset,$numbers ,$Verset,   $v   );
-//        $Sourate =  array_slice( $numbers,1,3);
         return $this->render('serie_question.html.twig', [
             'candidat' => $candidat,
-            'versets' => $v,
-            'sourate'=>$sourate
+            'versets' => $listeQuestions,
+
 
         ]);
     }
