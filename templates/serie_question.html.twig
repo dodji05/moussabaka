@@ -1,6 +1,7 @@
 {% extends 'base_front.html.twig' %}
 {% block header_title %} Choix de serie de question {% endblock %}
 {% block body %}
+{#    {% dump(versets) %}#}
 
     <div class="container">
         <div class="row">
@@ -10,19 +11,48 @@
                         <h3>{{ candidat.mom }}  {{ candidat.prenom }} Voici la liste des questions</h3>
 
                         <div class="mb-3"></div>
-                        {% for verset in versets  %}
-                            <div class="info-box mb-3 bg-success">
-                                <span class="info-box-icon"><i class="far fa-comment"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text" style="font-size: 24px"> Sourate {{ verset.surahnumber }} : {{ verset.surahnamearabic }}</span>
-                                    <span class="info-box-text" style="font-size: 20px"> verset {{ verset.ayahnumber }}</span>
-                                    <span class="info-box-text"> {{ verset.originalarabictext }}</span>
+                        <div class="accordion" id="accordionExample">
+                            {% for entity, lists in versets %}
 
+
+                                <div class="card card-primary card-outline">
+                                    <div class="card-header" id="heading-{{ entity }}">
+                                        <a class="d-block w-100" data-toggle="collapse" href="#collapse-{{ entity }}"
+                                           aria-expanded="true">
+                                            <div class="card-header">
+                                                <h4 class="card-title w-100">
+                                                   Questions {{ entity + 1}}
+                                                </h4>
+                                            </div>
+                                        </a>
+                                        {#                                        <h4 class="mb-0 card-title w-100"> #}
+                                        {#                                            <button class="btn btn-link btn-block text-left" type="button" #}
+                                        {#                                                    data-toggle="collapse" #}
+                                        {#                                                    data-target="#collapse-{{ entity }}" aria-expanded="true" #}
+                                        {#                                                    aria-controls="collapse-{{ entity }}"> #}
+                                        {#                                                Collapsible Group Item #1 #}
+                                        {#                                            </button> #}
+                                        {#                                        </h4> #}
+                                    </div>
+
+                                    <div id="collapse-{{ entity }}" class="collapse"
+                                         aria-labelledby="heading-{{ entity }}"
+                                         data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            {% for verset in lists %}
+
+                                                <p class="info-box-text" style="font-size: 26px; font-weight: bold"> Sourate {{ verset.surahnumber }} : {{ verset.surahnamearabic }}</p>
+                                                <p class="info-box-text" style="font-size: 22px; margin-left:10px"> verset {{ verset.ayahnumber }} :{{ verset.originalarabictext }} </p>
+{#                                                <span class="info-box-text"> {{ verset.originalarabictext }}</span>#}
+
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </div>
 
-                            </div>
-                        {% endfor %}
 
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -31,3 +61,5 @@
 
 
 {% endblock %}
+
+

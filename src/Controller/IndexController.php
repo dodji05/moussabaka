@@ -99,10 +99,23 @@ class IndexController extends AbstractController
         $listeSourate = $sourateRepository->findBy(['surahnumber' =>  $intervalleSourate, 'isReaded' => false]);
         shuffle($listeSourate);
         $listeQuestions =  array_slice( $listeSourate,0,3);
+        $questionsTest=[];
+        $nb = 15;
+        foreach (  $listeQuestions  as $item){
+            $questionsTest[]= $sourateRepository->createQueryBuilder('s')
+                ->where('s.id >= :id')
+                ->setParameter('id', $item->getId())
+                ->orderBy('s.id', 'ASC')
+                ->setMaxResults($nb)
+                ->getQuery()
+                ->getResult();
+        }
+
+//        dd(  $listeQuestions, $questionsTest );
 
         return $this->render('serie_question.html.twig', [
             'candidat' => $candidat,
-            'versets' => $listeQuestions,
+            'versets' => $questionsTest,
 
 
         ]);
