@@ -96,17 +96,23 @@ class IndexController extends AbstractController
 
         // intervalle de Sourates de la categorie de l'eleve
         $intervalleSourate = range($debutSourate, 114);
+
+        // Récupérer les sourates non lues de l'intervalle et les mélanger
         $listeSourate = $sourateRepository->findBy(['surahnumber' =>  $intervalleSourate, 'isReaded' => false]);
         shuffle($listeSourate);
+
+        // Sélectionner un sous-ensemble de 3 questions parmi les sourates non lues
         $listeQuestions =  array_slice( $listeSourate,0,3);
+
         $questionsTest=[];
-        $nb = 15;
+        $nbVersetsAlire = 15;
+        // Récupérer les 15 premières verset a partir de la sourate sélectionnée
         foreach (  $listeQuestions  as $item){
             $questionsTest[]= $sourateRepository->createQueryBuilder('s')
                 ->where('s.id >= :id')
                 ->setParameter('id', $item->getId())
                 ->orderBy('s.id', 'ASC')
-                ->setMaxResults($nb)
+                ->setMaxResults($nbVersetsAlire)
                 ->getQuery()
                 ->getResult();
         }
