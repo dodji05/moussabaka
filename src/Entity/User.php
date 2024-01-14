@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -61,6 +63,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?bool $isActif = null;
+
+    #[ORM\OneToMany(mappedBy: 'membres', targetEntity: Jury::class)]
+    private Collection $juries;
+
+
 
     public function getId(): ?int
     {
@@ -187,6 +194,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->isActif=true;
+        $this->juries = new ArrayCollection();
     }
+
+    /**
+     * @return Collection<int, Jury>
+     */
+    public function getJuries(): Collection
+    {
+        return $this->juries;
+    }
+
+    public function addJury(Jury $jury): static
+    {
+        if (!$this->juries->contains($jury)) {
+            $this->juries->add($jury);
+            $jury->setMembres($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJury(Jury $jury): static
+    {
+        if ($this->juries->removeElement($jury)) {
+            // set the owning side to null (unless already changed)
+            if ($jury->getMembres() === $this) {
+                $jury->setMembres(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 
 }
