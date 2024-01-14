@@ -34,9 +34,6 @@ class Candidat
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: Notes::class)]
-    private Collection $notes;
-
     #[ORM\Column(nullable: true)]
     private ?int $age = null;
 
@@ -133,35 +130,9 @@ class Candidat
         return $this;
     }
 
-    /**
-     * @return Collection<int, Notes>
-     */
-    public function getNotes(): Collection
-    {
-        return $this->notes;
-    }
 
-    public function addNote(Notes $note): self
-    {
-        if (!$this->notes->contains($note)) {
-            $this->notes->add($note);
-            $note->setCandidat($this);
-        }
 
-        return $this;
-    }
 
-    public function removeNote(Notes $note): self
-    {
-        if ($this->notes->removeElement($note)) {
-            // set the owning side to null (unless already changed)
-            if ($note->getCandidat() === $this) {
-                $note->setCandidat(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getAge(): ?int
     {
