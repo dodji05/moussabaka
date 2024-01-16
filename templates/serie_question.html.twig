@@ -9,7 +9,7 @@
                 <div class="card card-solid">
                     <div class="card-body pb-0">
                         <h3>{{ candidat.mom }}  {{ candidat.prenom }} Voici la liste des questions</h3>
-
+                        {{ candidat.categorie.name }}  {{ candidat.categorie.debutSourate }}
                         <div class="mb-3"></div>
                         <div class="accordion" id="accordionExample">
                             {% for entity, lists in versets %}
