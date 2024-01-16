@@ -120,7 +120,7 @@ class IndexController extends AbstractController
             $index->setChoiceIndex( $position);
             $index->setCategorie($candidat->getCategorie()->getId());
             $index->setCandidat($candidat->getId());
-//            $choixRepository->save( $index,true);
+   $choixRepository->save( $index,true);
 
         }
 
