@@ -54,7 +54,7 @@ class IndexController extends AbstractController
         $pagination = $paginator->paginate(
             $candidats,
             $request->query->getInt('page', 1),
-            12 // Number of items per page
+            25 // Number of items per page
         );
 
         return $this->render('index.html.twig', [
