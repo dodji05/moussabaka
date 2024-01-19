@@ -35,6 +35,14 @@ class Sourate
     #[ORM\Column]
     private ?bool $isReaded = null;
 
+    #[ORM\OneToMany(mappedBy: 'Sourate', targetEntity: Question::class)]
+    private Collection $questions;
+
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
+
 
 
 
@@ -113,6 +121,36 @@ class Sourate
     public function setIsReaded(bool $isReaded): static
     {
         $this->isReaded = $isReaded;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): static
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setSourate($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): static
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getSourate() === $this) {
+                $question->setSourate(null);
+            }
+        }
 
         return $this;
     }

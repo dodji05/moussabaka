@@ -48,9 +48,13 @@ class Candidat
     #[ORM\ManyToOne(inversedBy: 'candidats')]
     private ?EcoledeProvenance $ecoledeProvenance = null;
 
+    #[ORM\OneToMany(mappedBy: 'candidat', targetEntity: Question::class)]
+    private Collection $questions;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
+        $this->questions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -185,5 +189,35 @@ class Candidat
     }
     public function getFullName() {
         return "{$this->prenom} {$this->mom}";
+    }
+
+    /**
+     * @return Collection<int, Question>
+     */
+    public function getQuestions(): Collection
+    {
+        return $this->questions;
+    }
+
+    public function addQuestion(Question $question): static
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setCandidat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): static
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getCandidat() === $this) {
+                $question->setCandidat(null);
+            }
+        }
+
+        return $this;
     }
 }

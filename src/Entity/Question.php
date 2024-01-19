@@ -2,27 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\JuryRepository;
+use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: JuryRepository::class)]
-class Jury
+#[ORM\Entity(repositoryClass: QuestionRepository::class)]
+class Question
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'juries')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $membres = null;
+    #[ORM\ManyToOne(inversedBy: 'questions')]
+    private ?Candidat $candidat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'juries')]
-    private ?Annee $annnee = null;
+    #[ORM\ManyToOne(inversedBy: 'questions')]
+    private ?Sourate $Sourate = null;
 
-    #[ORM\OneToMany(mappedBy: 'jury', targetEntity: Notes::class)]
+    #[ORM\OneToMany(mappedBy: 'Questions', targetEntity: Notes::class)]
     private Collection $notes;
 
     public function __construct()
@@ -35,26 +34,26 @@ class Jury
         return $this->id;
     }
 
-    public function getMembres(): ?User
+    public function getCandidat(): ?Candidat
     {
-        return $this->membres;
+        return $this->candidat;
     }
 
-    public function setMembres(?User $membres): static
+    public function setCandidat(?Candidat $candidat): static
     {
-        $this->membres = $membres;
+        $this->candidat = $candidat;
 
         return $this;
     }
 
-    public function getAnnnee(): ?Annee
+    public function getSourate(): ?Sourate
     {
-        return $this->annnee;
+        return $this->Sourate;
     }
 
-    public function setAnnnee(?Annee $annnee): static
+    public function setSourate(?Sourate $Sourate): static
     {
-        $this->annnee = $annnee;
+        $this->Sourate = $Sourate;
 
         return $this;
     }
@@ -71,7 +70,7 @@ class Jury
     {
         if (!$this->notes->contains($note)) {
             $this->notes->add($note);
-            $note->setJury($this);
+            $note->setQuestions($this);
         }
 
         return $this;
@@ -81,8 +80,8 @@ class Jury
     {
         if ($this->notes->removeElement($note)) {
             // set the owning side to null (unless already changed)
-            if ($note->getJury() === $this) {
-                $note->setJury(null);
+            if ($note->getQuestions() === $this) {
+                $note->setQuestions(null);
             }
         }
 

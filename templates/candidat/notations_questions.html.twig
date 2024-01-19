@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            <div class="card-title"> Candidat</div>
+        </div>
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle" src="../../dist/img/user4-128x128.jpg"
+                                 alt="User profile picture">
+                        </div>
+                        <h3 class="profile-username text-center">{{ candidat.fullName }}</h3>
+                        <p class="text-muted text-center">categorie : {{ candidat.categorie.name }}</p>
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table table-borderless table-striped">
+                            <tr>
+                                <th>Nom et prenoms</th>
+                                <td>{{ candidat.fullName }}</td>
+                            </tr>
+                            <tr>
+                                <th>Ecole</th>
+                                <td>{{ candidat.ecoledeProvenance.nom }}</td>
+                            </tr>
+                            <tr>
+                                <th>Age</th>
+                                <td>{{ candidat.age }}</td>
+                            </tr>
+                            <tr>
+                                <th>localite</th>
+                                <td>{{ candidat.localite }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 ">
+                <div class="card card-outline card-success">
+                    <div class="card-header">
+                        <div class="card-title"> Question <br>
+                            Sourate {{ question.sourate.surahnumber }} : verset {{ question.sourate.ayahnumber }}
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <h3> Liste des versets a lire </h3> <br>
+                        {% for verset in versets %}
+
+                            <p class="info-box-text" style="font-size: 20px; font-weight: bold">{{ loop.index }} -
+                                Sourate {{ verset.surahnumber }} : {{ verset.surahnamearabic }}</p>
+                            <p class="info-box-text" style="font-size: 18px; margin-left:12px">
+                                verset {{ verset.ayahnumber }} :{{ verset.originalarabictext }} </p>
+                            {#                                                <span class="info-box-text"> {{ verset.originalarabictext }}</span> #}
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-5 ">
+                <div class="card card-outline card-success">
+                    <div class="card-header">
+                        <div class="card-title"> Notation</div>
+                    </div>
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12">
+                                    {{ form_label(form.memorisation) }}
+                                    <div class="input-group mb-3">
+
+                                        {{ form_widget(form.memorisation) }}
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                 <i class="fas fa-minus-circle" id="decrementMemorisation"></i></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    {{ form_label(form.tajwid) }}
+                                    <div class="input-group mb-3">
+
+                                        {{ form_widget(form.tajwid) }}
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                 <i class="fas fa-minus-circle" id="decrementTajwid"></i></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+                                    {{ form_label(form.lecture) }}
+                                    <div class="input-group mb-3">
+
+                                        {{ form_widget(form.lecture) }}
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                 <i class="fas fa-minus-circle" id="decrementLecture"></i></span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+
+
+                                    {{ form_row(form.commentaires) }}
+
+                                </div>
+                                <div class="col-md-12 col-sm-12">
+
+
+                                    Notes : <span id="notes"></span>
+
+                                </div>
+                                {#                                <div class="col-md-1 col-sm-12 p-3"> #}
+                                {#                                    <button type="button" id="decrementButton">Décrémenter</button> #}
+                                {#                                </div> #}
+                            </div>
+                        </div>
+
+                        {{ form_widget(form) }}
+
+                        <button class="btn btn btn-primary float-lg-right">{{ button_label|default('Valider la note') }}</button>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block javascript %}
+<script>
+    $(document).ready(function() {
+    $('#decrementMemorisation').on('click', function () {
+        // Récupérez la valeur actuelle du champ quantite
+        var currentQuantite = parseInt($('#{{ form.memorisation.vars.id }}').val());
+  var note = $('#notes').val(49);
+            // Décrémentez la valeur
+            var decrementedValue = currentQuantite - 2;
+
+            // Mettez à jour la valeur du champ quantite
+            $('#{{ form.memorisation.vars.id }}').val(decrementedValue);
+
+            // Envoyez une requête AJAX pour mettre à jour la valeur côté serveur si nécessaire
+
+        });
+
+     $('#decrementTajwid').on('click', function() {
+        // Récupérez la valeur actuelle du champ quantite
+        var currentQuantite = parseInt($('#{{ form.tajwid.vars.id }}').val());
+
+            // Décrémentez la valeur
+            var decrementedValue = currentQuantite - 1;
+
+            // Mettez à jour la valeur du champ quantite
+            $('#{{ form.tajwid.vars.id }}').val(decrementedValue);
+
+            // Envoyez une requête AJAX pour mettre à jour la valeur côté serveur si nécessaire
+
+        });
+
+      $('#decrementLecture').on('click', function() {
+        // Récupérez la valeur actuelle du champ quantite
+        var currentLectureNotes = parseFloat($('#{{ form.lecture.vars.id }}').val());
+
+            // Décrémentez la valeur
+            var decrementedValue = currentLectureNotes - 0.5;
+
+            // Mettez à jour la valeur du champ quantite
+            $('#{{ form.lecture.vars.id }}').val(decrementedValue);
+
+            // Envoyez une requête AJAX pour mettre à jour la valeur côté serveur si nécessaire
+
+        });
+    });
+</script>
+{% endblock %}
+

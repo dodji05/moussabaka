@@ -1,0 +1,53 @@
+{% extends 'base_table_admilte.html.twig' %}
+{% block ti %} Liste des candidats{% endblock %}
+    {% block tablecontent %}
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th></th>
+
+
+                <th>Sourate</th>
+
+                <th>Verset</th>
+
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for question in questions %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+
+                    <td>{{ question.sourate.surahnumber }} : {{ question.sourate.surahnamearabic }}</td>
+                    <td>{{ question.sourate.ayahnumber}}</td>
+                    <td>
+                        <a href="{{ path('app_notes_questions',{'id':question.id}) }}"> noter</a>
+                    </td>
+
+{#                    <td>{{ candidat.active ? 'Yes' : 'No' }}</td>#}
+{#                    <td>{{ candidat.createdAt ? candidat.createdAt|date('Y-m-d H:i:s') : '' }}</td>#}
+                    <td>
+{#                        <a href="{{ path('app_notes_liste_questions',{'id':candidat.id}) }}" class="btn btn-success">Questionnaires </a>#}
+
+{#                        <a href="{{ path('app_candidat_show', {'id': candidat.id}) }}">#}
+{#                            <i class="fas fa-eye" style="color: #28a745">#}
+
+{#                            </i>#}
+{#                        </a>#}
+{#                        <a href="{{ path('app_candidat_edit', {'id': candidat.id}) }}">#}
+{#                            <i class="fas fa-edit" style="color: #007bff">#}
+
+{#                            </i>#}
+{#                        </a>#}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+

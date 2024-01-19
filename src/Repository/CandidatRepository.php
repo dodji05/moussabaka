@@ -39,6 +39,14 @@ class CandidatRepository extends ServiceEntityRepository
         }
     }
 
+    public function participant(){
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.questions','q')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 //    /**
 //     * @return Candidat[] Returns an array of Candidat objects
 //     */
