@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Jury;
 use App\Form\JuryType;
 use App\Repository\JuryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,19 +23,20 @@ class JuryController extends AbstractController
     }
 
     #[Route('/new', name: 'app_jury_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, JuryRepository $juryRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $jury = new Jury();
         $form = $this->createForm(JuryType::class, $jury);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $juryRepository->save($jury, true);
+            $entityManager->persist($jury);
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_jury_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('jury/new.html.twig', [
+        return $this->render('jury/new.html.twig', [
             'jury' => $jury,
             'form' => $form,
         ]);
@@ -49,28 +51,29 @@ class JuryController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_jury_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Jury $jury, JuryRepository $juryRepository): Response
+    public function edit(Request $request, Jury $jury, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(JuryType::class, $jury);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $juryRepository->save($jury, true);
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_jury_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('jury/edit.html.twig', [
+        return $this->render('jury/edit.html.twig', [
             'jury' => $jury,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_jury_delete', methods: ['POST'])]
-    public function delete(Request $request, Jury $jury, JuryRepository $juryRepository): Response
+    public function delete(Request $request, Jury $jury, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$jury->getId(), $request->request->get('_token'))) {
-            $juryRepository->remove($jury, true);
+            $entityManager->remove($jury);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_jury_index', [], Response::HTTP_SEE_OTHER);

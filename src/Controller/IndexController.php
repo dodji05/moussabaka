@@ -107,7 +107,8 @@ class IndexController extends AbstractController
         return $this->render('choix_serie_question.html.twig', [
             'choix' => $choix,
             'candidat' => $candidat,
-            'sourate' => $Sourate
+            'sourate' => $Sourate,
+            "nbrecandidat"=>$nbCandidatParCategorie
         ]);
     }
 

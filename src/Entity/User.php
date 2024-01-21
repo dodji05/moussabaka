@@ -228,5 +228,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return $this->getFullName();
+    }
+
 
 }

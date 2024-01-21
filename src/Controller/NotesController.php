@@ -44,6 +44,7 @@ class NotesController extends AbstractController
         $note = new Notes();
         $note->setQuestions($question);
         $note->setJury($juryRepository->findOneBy(['membres'=>$this->getUser(),'annnee'=>1]));
+      //  dd(($juryRepository->findOneBy(['membres'=>$this->getUser(),'annnee'=>1])));
         $form = $this->createForm(NotesType::class, $note);
         $candidat = $question->getCandidat();
 
