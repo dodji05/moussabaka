@@ -27,7 +27,7 @@ class Notes
     private ?int $tajwid = null;
 
     #[ORM\Column(nullable: true)]
-    private ?int $lecture = null;
+    private ?float $lecture = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaires = null;

@@ -47,20 +47,21 @@ class CandidatRepository extends ServiceEntityRepository
             ;
     }
 
-//    /**
-//     * @return Candidat[] Returns an array of Candidat objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Candidat[] Returns an array of Candidat objects
+     */
+    public function NombreCandidatsParCategorie($value): array
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.categorie','categorie')
+            ->andWhere('categorie.name = :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.mom', 'ASC')
+            //->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
 //    public function findOneBySomeField($value): ?Candidat
 //    {

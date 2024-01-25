@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Contacts</title>
+    <title>Plateforme | Moussabaka</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -80,77 +80,184 @@
         <!-- Main content -->
         <section class="content">
 
+
             <!-- Default box -->
             <div class="card card-solid">
                 <div class="card-body pb-0">
                     {# Display the search form #}
-                    {{ form_start(searchForm) }}
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-10">  {{ form_row(searchForm.search) }} </div>
-                            <div class="col-md-2">
-                                <div class="mb-3">
-                                <button type="submit" class="btn btn-primary ctn-btn">Rechercher</button> </div>
-                            </div>
-                            </div>
-                    </div>
 
 
-                    {{ form_end(searchForm) }}
+
+
+                    <!-- Small boxes (Stat box) -->
 
                     <div class="row">
-                        {% for candidat in pagination %}
-                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                            <div class="card bg-light d-flex flex-fill">
-                                <div class="card-header text-muted border-bottom-0">
-                                   Categorie: {{ candidat.categorie }}
-                                </div>
-                                <div class="card-body pt-0">
-                                    <div class="row">
-                                        <div class="col-7">
-                                            <h2 class="lead"><b>{{ candidat.mom }}  {{ candidat.prenom }}</b></h2>
-                                            <p class="text-muted text-sm"><b>Ecole de Provenance: </b> {{ candidat.ecoledeProvenance }} </p>
-                                            <ul class="ml-4 mb-0 fa-ul text-muted">
-                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Age: {{ candidat.age }}</li>
-                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Localité #:
-                                                    {{ candidat.localite }}</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-5 text-center">
-                                            <img src="{{ asset('uploads/candidats/photo/' ~candidat.photo) }}" alt="user-avatar" class="img-circle img-fluid">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
+                        <div class="col-lg-4 col-md-6">
+                            <!-- small box -->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <a href="{{ path('app_index_liste_candidats',{'slug':"Naba"}) }}" class="small-box-footer">
 
-                                    <div class="text-right">
+                                    <h3>{{ naba }} canidat(es)</h3>
+                                    </a>
 
-                                        <a href="{{ path('app_questions_serie',{'id':candidat.id}) }}" class="btn btn-sm btn-primary">
-                                            <i class="fas fa-user"></i> View Profile
-                                        </a>
-                                    </div>
+                                    <p>Naba</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-shopping-cart"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-4 col-md-6">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <a href="{{ path('app_index_liste_candidats',{'slug':"Moulk"}) }}" class="small-box-footer">
+
+                                    <h3>{{ moulk }} canidat(es)<sup style="font-size: 20px"></sup></h3>
+                                    </a>
+
+                                    <p>Moulk</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-4 col-md-6">
+                            <!-- small box -->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <a href="{{ path('app_index_liste_candidats',{'slug':"Moujadala"}) }}" class="small-box-footer">
+
+                                    <h3>{{ moujadala }} canidat(es)</h3>
+                                    </a>
+
+                                    <p>Moujadala</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- ./col -->
+
+                        <div class="col-lg-4 col-md-6">
+                            <!-- small box -->
+                            <div class="small-box bg-red">
+                                <div class="inner">
+                                    <a href="{{ path('app_index_liste_candidats',{'slug':"Ahqaf"}) }}" class="small-box-footer">
+
+                                    <h3>{{ ahqaf }} canidat(es)</h3>
+                                    </a>
+
+                                    <p>Ahqaf</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-4 col-md-6">
+                            <!-- small box -->
+                            <div class="small-box bg-orange">
+                                <div class="inner">
+                                    <a href="{{ path('app_index_liste_candidats',{'slug':"Yassin"}) }}" class="small-box-footer">
 
-                        {% endfor %}
+                                    <h3>{{ yassin }} canidat(es) </h3>
+                                    </a>
 
+                                    <p>Yassin</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <!-- small box -->
+                            <div class="small-box bg-purple">
+                                <div class="inner">
+                                    <a href="{{ path('app_index_liste_candidats',{'slug':"Ankabout"}) }}" class="small-box-footer">
+
+                                    <h3>{{ ankabout }} canidat(es)</h3>
+                                    </a>
+
+                                    <p>Ankabout</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <!-- small box -->
+                            <div class="small-box bg-blue">
+                                <div class="inner">
+                                    <a href="{{ path('app_index_liste_candidats',{'slug':"Nisf"}) }}" class="small-box-footer">
+
+                                    <h3>{{ nisf }} canidat(es)</h3>
+                                    </a>
+
+                                    <p>Nisf</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <!-- small box -->
+                            <div class="small-box bg-black">
+                                <div class="inner">
+                                    <a href="{{ path('app_index_liste_candidats',{'slug':"Tawba"}) }}" class="small-box-footer">
+
+                                    <h3>{{ tawba }} canidat(es)</h3>
+                                    </a>
+
+                                    <p>Tawba</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <!-- small box -->
+                            <div class="small-box bg-cyan">
+                                <div class="inner">
+                                    <a href="{{ path('app_index_liste_candidats',{'slug':"Kamil"}) }}" class="small-box-footer">
+
+                                    <h3>{{ kamil }} canidat(es)</h3>
+                                    </a>
+
+                                    <p>Kamil</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-pie-graph"></i>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- ./col -->
                     </div>
+                    <!-- /.row -->
+
+
+
+
 
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
-                    <nav aria-label="Contacts Page Navigation">
-                        {# display navigation #}
 
-                        <ul class="pagination justify-content-center m-0">
-
-                                {{ knp_pagination_render(pagination) }}
-
-
-                        </ul>
-                    </nav>
-                </div>
                 <!-- /.card-footer -->
             </div>
             <!-- /.card -->

@@ -26,11 +26,52 @@ class IndexController extends AbstractController
     private array $cand = [];
 
     #[Route('/', name: 'app_index')]
-    public function index(CandidatRepository $candidatRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(CandidatRepository $candidatRepository): Response
+    {
+
+        $nbCandidatnaba = count($candidatRepository->findBy(['categorie' => 1]));
+        $nbCandidatMoulk = count($candidatRepository->findBy(['categorie' => 2]));
+        $nbCandidatMoujadala = count($candidatRepository->findBy(['categorie' => 3]));
+        $nbCandidatAhqaf = count($candidatRepository->findBy(['categorie' => 4]));
+        $nbCandidatYassin = count($candidatRepository->findBy(['categorie' => 5]));
+        $nbCandidatAnkabout = count($candidatRepository->findBy(['categorie' => 6]));
+        $nbCandidatnisf = count($candidatRepository->findBy(['categorie' => 7]));
+        $nbCandidattawba = count($candidatRepository->findBy(['categorie' => 8]));
+        $nbCandidatkamil = count($candidatRepository->findBy(['categorie' => 9]));
+
+
+
+
+
+
+
+
+        // dd($nbCandidatnaba);
+
+
+
+
+        return $this->render('index.html.twig', [
+
+            'naba'=>$nbCandidatnaba,
+            'moulk'=>$nbCandidatMoulk,
+            'moujadala'=>$nbCandidatMoujadala,
+            'ahqaf'=>$nbCandidatAhqaf,
+            'yassin'=>$nbCandidatYassin,
+            'ankabout'=>$nbCandidatAnkabout,
+            'nisf'=>$nbCandidatnisf,
+            'tawba'=>$nbCandidattawba,
+            'kamil'=>$nbCandidatkamil
+        ]);
+    }
+
+
+    #[Route('/listecandidats/{slug}', name: 'app_index_liste_candidats')]
+    public function listeCandidats(CandidatRepository $candidatRepository,$slug, PaginatorInterface $paginator, Request $request): Response
     {
         $searchForm = $this->createForm(SearchType::class);
         $searchForm->handleRequest($request);
-
+        $candidats=$candidatRepository->NombreCandidatsParCategorie($slug);
         $queryBuilder = $candidatRepository->createQueryBuilder('c');
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
@@ -52,19 +93,27 @@ class IndexController extends AbstractController
             }
         }
 
-        $candidats = $queryBuilder->getQuery()->getResult();
+       // $candidats = $queryBuilder->getQuery()->getResult();
         shuffle($candidats);
         // Paginate the results using KnpPaginatorBundle
         $pagination = $paginator->paginate(
             $candidats,
             $request->query->getInt('page', 1),
-            25 // Number of items per page
+            10 // Number of items per page
         );
 
-        return $this->render('index.html.twig', [
+        return $this->render('listecandidatparcategorie.html.twig', [
+            'candidats'=>$candidats,
             'pagination' => $pagination,
             'searchForm' => $searchForm->createView(),
+            'slug'=>$slug
+
         ]);
+
+
+
+
+
     }
 //    public function index(CandidatRepository $candidatRepository,PaginatorInterface $paginator,Request $request): Response
 //    {
