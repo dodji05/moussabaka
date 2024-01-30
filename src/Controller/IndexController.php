@@ -39,6 +39,8 @@ class IndexController extends AbstractController
         $nbCandidattawba = count($candidatRepository->findBy(['categorie' => 8]));
         $nbCandidatkamil = count($candidatRepository->findBy(['categorie' => 9]));
 
+        //dd($nbCandidatnisf);
+
 
 
 
@@ -72,38 +74,46 @@ class IndexController extends AbstractController
         $searchForm = $this->createForm(SearchType::class);
         $searchForm->handleRequest($request);
         $candidats=$candidatRepository->NombreCandidatsParCategorie($slug);
-        $queryBuilder = $candidatRepository->createQueryBuilder('c');
+        $queryBuilder = $candidatRepository->createQueryBuilder('c')
+            ->innerJoin('c.categorie', 's')
+            ->innerJoin('c.ecoledeProvenance', 'e')
+            ->Where('s.name = :val')
+            ->setParameter('val',$slug);;
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             $searchTerm = $searchForm->get('search')->getData();
 
+
+
             // Modify the queryBuilder to include your search logic
             if ($searchTerm) {
                 $queryBuilder
-                    ->innerJoin('c.categorie', 's')
-                    ->innerJoin('c.ecoledeProvenance', 'e')
-                    ->orWhere('c.mom LIKE :searchTerm')
-                    ->orWhere('c.prenom LIKE :searchTerm')
-                    ->orWhere('c.numeroCandidat LIKE :searchTerm')
-                    ->orWhere('c.age LIKE :searchTerm')
-                    ->orWhere('s.name LIKE :searchTerm')
-                    ->orWhere('c.localite LIKE :searchTerm')
-                    ->orWhere('e.nom LIKE :searchTerm')
+
+
+                   ->andWhere('c.mom LIKE :searchTerm')
+                 // ->andWhere('c.prenom LIKE :searchTerm')
+                   //->orWhere('c.numeroCandidat LIKE :searchTerm')
+                   // ->orWhere('c.age LIKE :searchTerm')
+                   // ->orWhere('s.name LIKE :searchTerm')
+                   //->orWhere('c.localite LIKE :searchTerm')
+                  // ->orWhere('e.nom LIKE :searchTerm')
+
                     ->setParameter('searchTerm', "%$searchTerm%");
             }
         }
 
-       // $candidats = $queryBuilder->getQuery()->getResult();
-        shuffle($candidats);
+        $candidats1 = $queryBuilder->getQuery()->getResult();
+       //dump($candidats1);
+        shuffle($candidats1);
         // Paginate the results using KnpPaginatorBundle
         $pagination = $paginator->paginate(
-            $candidats,
+            $candidats1,
             $request->query->getInt('page', 1),
             10 // Number of items per page
         );
 
         return $this->render('listecandidatparcategorie.html.twig', [
-            'candidats'=>$candidats,
+            'candidats'=>$candidats1,
             'pagination' => $pagination,
             'searchForm' => $searchForm->createView(),
             'slug'=>$slug
