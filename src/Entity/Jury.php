@@ -25,6 +25,7 @@ class Jury
     #[ORM\OneToMany(mappedBy: 'jury', targetEntity: Notes::class)]
     private Collection $notes;
 
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
