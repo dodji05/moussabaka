@@ -42,86 +42,69 @@ class IndexController extends AbstractController
         //dd($nbCandidatnisf);
 
 
-
-
-
-
-
-
         // dd($nbCandidatnaba);
-
-
 
 
         return $this->render('index.html.twig', [
 
-            'naba'=>$nbCandidatnaba,
-            'moulk'=>$nbCandidatMoulk,
-            'moujadala'=>$nbCandidatMoujadala,
-            'ahqaf'=>$nbCandidatAhqaf,
-            'yassin'=>$nbCandidatYassin,
-            'ankabout'=>$nbCandidatAnkabout,
-            'nisf'=>$nbCandidatnisf,
-            'tawba'=>$nbCandidattawba,
-            'kamil'=>$nbCandidatkamil
+            'naba' => $nbCandidatnaba,
+            'moulk' => $nbCandidatMoulk,
+            'moujadala' => $nbCandidatMoujadala,
+            'ahqaf' => $nbCandidatAhqaf,
+            'yassin' => $nbCandidatYassin,
+            'ankabout' => $nbCandidatAnkabout,
+            'nisf' => $nbCandidatnisf,
+            'tawba' => $nbCandidattawba,
+            'kamil' => $nbCandidatkamil
         ]);
     }
 
 
     #[Route('/listecandidats/{slug}', name: 'app_index_liste_candidats')]
-    public function listeCandidats(CandidatRepository $candidatRepository,$slug, PaginatorInterface $paginator, Request $request): Response
+    public function listeCandidats(CandidatRepository $candidatRepository, $slug, PaginatorInterface $paginator, Request $request): Response
     {
         $searchForm = $this->createForm(SearchType::class);
         $searchForm->handleRequest($request);
-        $candidats=$candidatRepository->NombreCandidatsParCategorie($slug);
+        $candidats = $candidatRepository->NombreCandidatsParCategorie($slug);
         $queryBuilder = $candidatRepository->createQueryBuilder('c')
             ->innerJoin('c.categorie', 's')
             ->innerJoin('c.ecoledeProvenance', 'e')
             ->Where('s.name = :val')
-            ->setParameter('val',$slug);;
+            ->setParameter('val', $slug);;
 
         if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             $searchTerm = $searchForm->get('search')->getData();
 
-
-
-            // Modify the queryBuilder to include your search logic
             if ($searchTerm) {
                 $queryBuilder
-
-
-                   ->andWhere('c.mom LIKE :searchTerm')
-                 // ->andWhere('c.prenom LIKE :searchTerm')
-                   //->orWhere('c.numeroCandidat LIKE :searchTerm')
-                   // ->orWhere('c.age LIKE :searchTerm')
-                   // ->orWhere('s.name LIKE :searchTerm')
-                   //->orWhere('c.localite LIKE :searchTerm')
-                  // ->orWhere('e.nom LIKE :searchTerm')
-
+                    ->andWhere(
+                        $queryBuilder->expr()->orX(
+                            $queryBuilder->expr()->like('c.mom', ':searchTerm'),
+                            $queryBuilder->expr()->like('c.prenom', ':searchTerm')
+                        )
+                    )
                     ->setParameter('searchTerm', "%$searchTerm%");
+
             }
         }
 
         $candidats1 = $queryBuilder->getQuery()->getResult();
-       //dump($candidats1);
+        //dump($candidats1);
         shuffle($candidats1);
         // Paginate the results using KnpPaginatorBundle
         $pagination = $paginator->paginate(
             $candidats1,
             $request->query->getInt('page', 1),
-            10 // Number of items per page
+            12 // Number of items per page
         );
 
         return $this->render('listecandidatparcategorie.html.twig', [
-            'candidats'=>$candidats1,
+            'candidats' => $candidats1,
             'pagination' => $pagination,
             'searchForm' => $searchForm->createView(),
-            'slug'=>$slug
+            'slug' => $slug
 
         ]);
-
-
-
 
 
     }
@@ -167,7 +150,7 @@ class IndexController extends AbstractController
             'choix' => $choix,
             'candidat' => $candidat,
             'sourate' => $Sourate,
-            "nbrecandidat"=>$nbCandidatParCategorie
+            "nbrecandidat" => $nbCandidatParCategorie
         ]);
     }
 
@@ -220,15 +203,15 @@ class IndexController extends AbstractController
 
 //        if (!$dejaPasse) {
 
-            if ($listeSourateSelectionne and !$dejaPasse) {
-                foreach ($listeSourateSelectionne as $sourate) {
-                    $question = new Question();
-                    $question->setCandidat($candidat);
-                    $question->setSourate($sourate);
-                    $entityManager->persist($question);
-                }
-                $entityManager->flush();
+        if ($listeSourateSelectionne and !$dejaPasse) {
+            foreach ($listeSourateSelectionne as $sourate) {
+                $question = new Question();
+                $question->setCandidat($candidat);
+                $question->setSourate($sourate);
+                $entityManager->persist($question);
             }
+            $entityManager->flush();
+        }
 //        }
 
         // Sélectionner un sous-ensemble de 3 questions parmi les sourates non lues
