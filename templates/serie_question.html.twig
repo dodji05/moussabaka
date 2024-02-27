@@ -39,13 +39,13 @@
                                          aria-labelledby="heading-{{ entity }}"
                                          data-parent="#accordionExample">
                                         <div class="card-body">
-                                            {% for verset in lists %}
+{#                                            {% for verset in lists %}#}
 
-                                                <p class="info-box-text" style="font-size: 26px; font-weight: bold"> Sourate {{ verset.surahnumber }} : {{ verset.surahnamearabic }}</p>
-                                                <p class="info-box-text" style="font-size: 22px; margin-left:10px"> verset {{ verset.ayahnumber }} :{{ verset.originalarabictext }} </p>
+                                                <p class="info-box-text" style="font-size: 26px; font-weight: bold"> Sourate {{ lists.surahnumber }} : <span style="font-size: 22px; margin-left:10px"> verset {{ lists.ayahnumber }}</span> </p>
+{#                                                <p class="info-box-text" style="font-size: 22px; margin-left:10px"> verset {{ lists.ayahnumber }} :{{ lists.originalarabictext }} </p>#}
 {#                                                <span class="info-box-text"> {{ verset.originalarabictext }}</span>#}
 
-                                            {% endfor %}
+{#                                            {% endfor %}#}
                                         </div>
                                     </div>
                                 </div>

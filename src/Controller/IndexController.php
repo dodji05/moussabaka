@@ -198,7 +198,7 @@ class IndexController extends AbstractController
 //            $listeSourateSelectionne[]  = $partie[$i][array_rand($partie[$i])];
             $listeSourateSelectionne[] = $listeSourate[$i][array_rand($listeSourate[$i])];
         }
-//        dd($listeSourateSelectionne);
+      //  dd($listeSourateSelectionne);
         $dejaPasse = $questionRepository->findOneBy(['candidat' => $candidat]);
 
 //        if (!$dejaPasse) {
@@ -214,16 +214,10 @@ class IndexController extends AbstractController
         }
 //        }
 
-        // Sélectionner un sous-ensemble de 3 questions parmi les sourates non lues
-//        $listeQuestions =  array_slice( $partieSeclionnee,0,3);
-
+        /*
         $questionsTest = [];
         $nbVersetsAlire = 15;
-        // Récupérer les 15 premières verset a partir de la sourate sélectionnée
-        //dd($partie);
 
-//            foreach (   $listeSourateSelectionne  as $item){
-        //    dd($partie,$item[$i]);
         for ($i = 0; $i < $nbreDePartie; $i++) {
             $questionsTest[] = $sourateRepository->createQueryBuilder('s')
                 ->where('s.id >= :id')
@@ -235,13 +229,11 @@ class IndexController extends AbstractController
                 ->getQuery()
                 ->getResult();
         }
-
-
-//        dd(  $listeQuestions, $questionsTest );
+        */
 
         return $this->render('serie_question.html.twig', [
             'candidat' => $candidat,
-            'versets' => $questionsTest,
+            'versets' => $listeSourateSelectionne,
 
 
         ]);
