@@ -30,17 +30,21 @@ class NotesController extends AbstractController
     }
 
     #[Route('/les-questions/{id}/participant', name: 'app_notes_liste_questions')]
-    public function questionParticipant(Candidat $candidat,QuestionRepository $questionRepository){
-//        dd($candidatRepository->participant());
-        $questionnaires = $questionRepository->findBy(['candidat'=>$candidat]);
-//        dd($questionnaires);
+    public function questionParticipant(Candidat $candidat,QuestionRepository $questionRepository,NotesRepository $notesRepository){
+
+        $questionnaires = $questionRepository->findBy(['candidat'=>$candidat,'note'=>false]);
+        $notes = $notesRepository->noteParCandidat($candidat->getId());
+      //  dd($notees);
+
         return $this->render('candidat/questionnaires_participants.html.twig', [
             'questions' =>  $questionnaires,
+            'notes'=> $notes,
+            'candidat'=>$candidat
         ]);
     }
 
     #[Route('/notes/{id}/questions', name: 'app_notes_questions')]
-    public function noteQuestions(Request $request,Question $question,NotesRepository $notesRepository,JuryRepository $juryRepository,SourateRepository $sourateRepository){
+    public function noteQuestions(Request $request,Question $question,NotesRepository $notesRepository,JuryRepository $juryRepository,SourateRepository $sourateRepository,QuestionRepository $questionRepository){
         $note = new Notes();
         $note->setQuestions($question);
         $note->setJury($juryRepository->findOneBy(['membres'=>$this->getUser(),'annnee'=>1]));
@@ -64,6 +68,8 @@ class NotesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
 
         {
+            $question->setNote(true);
+            $questionRepository->save( $question,true);
             $notesRepository->save($note, true);
 
             return $this->redirectToRoute('app_notes_liste_questions', ['id'=>$candidat->getId()], Response::HTTP_SEE_OTHER);

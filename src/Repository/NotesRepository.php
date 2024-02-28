@@ -63,4 +63,18 @@ class NotesRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    /**
+         * @return Notes[] Returns an array of Notes objects
+     */
+    public function noteParCandidat($candidat)
+    {
+        return $this->createQueryBuilder('n')
+            ->leftJoin('n.Questions','q')
+            ->leftJoin('q.candidat','c')
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $candidat)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

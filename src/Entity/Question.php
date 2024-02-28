@@ -24,9 +24,13 @@ class Question
     #[ORM\OneToMany(mappedBy: 'Questions', targetEntity: Notes::class)]
     private Collection $notes;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $note = null;
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();
+        $this->note = false;
     }
 
     public function getId(): ?int
@@ -84,6 +88,18 @@ class Question
                 $note->setQuestions(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isNote(): ?bool
+    {
+        return $this->note;
+    }
+
+    public function setNote(?bool $note): static
+    {
+        $this->note = $note;
 
         return $this;
     }
