@@ -54,7 +54,9 @@ class QuestionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-
+    /**
+     * @return Question[] Returns an array
+     */
     public function questionsNonNotees($questions, $candidat, $jury)
     {
 

@@ -45,10 +45,36 @@ class NotesController extends AbstractController
         $questionnaires1 = $questionRepository->questionsNonNotees($quest,$candidat,$jury);
 
         $result = array_merge($questionnaires1,  $notes);
-//        dd( $result );
+        $questions = [];
+        foreach ($questionnaires1  as $question){
+            $questions[] = [
+                "id" =>$question->getId(),
+                "sourate" =>$question->getSourate()->getSurahnumber(),
+                "sourate_arabic" =>$question->getSourate()->getSurahnamearabic(),
+                "verset" =>$question->getSourate()->getAyahnumber(),
+                "memorisation" =>'',
+                "tajwid" =>'',
+                "lecture" =>'',
+                "moyenne" =>'',
+                "action"=>true
+                ];
+        }
+        foreach ($notes  as $question){
+            $questions[] = [
+                "id" =>$question->getQuestions()->getId(),
+                "sourate" =>$question->getQuestions()->getSourate()->getSurahnumber(),
+                "sourate_arabic" =>$question->getQuestions()->getSourate()->getSurahnamearabic(),
+                "verset" =>$question->getQuestions()->getSourate()->getAyahnumber(),
+                "memorisation" =>(int)$question->getMemorisation(),
+                "tajwid" =>(int)$question->getTajwid(),
+                "lecture" =>(int)$question->getLecture(),
+                "moyenne" =>((int)$question->getLecture()+(int)$question->getTajwid() +(int)$question->getMemorisation()) / 3,
+                "action"=>false
+            ];
+        }
+//        dd(  $questions );
         return $this->render('candidat/questionnaires_participants.html.twig', [
-            'questions' =>   $questionnaires1,
-            'notes'=> $notes,
+            'questions' =>   $questions,
             'candidat'=>$candidat
         ]);
     }

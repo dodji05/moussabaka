@@ -22,56 +22,27 @@ Questions et notes du candidats {{ candidat.fullName }}
             </thead>
             <tbody>
             {% set moyenne = 0 %}
-            {% for note in notes %}
-                <tr>
-                    <td>{{ loop.index }}</td>
 
-                    <td>{{ note.questions.sourate.surahnumber }} : {{ note.questions.sourate.surahnamearabic }}</td>
-                    <td>{{ note.questions.sourate.ayahnumber}}</td>
-                    <td>{{ note.memorisation }}</td>
-                    <td>{{ note.tajwid }}</td>
-                    <td>{{ note.lecture }}</td>
-                    <td> {% set moyenne = (note.memorisation + note.tajwid + note.lecture) / 3%}
-                    {{ moyenne  }}
-                    </td>
-                    <td>
-                                                <a href=""> Details</a>
-                    </td>
-
-                    {#                    <td>{{ candidat.active ? 'Yes' : 'No' }}</td>#}
-                    {#                    <td>{{ candidat.createdAt ? candidat.createdAt|date('Y-m-d H:i:s') : '' }}</td>#}
-                    <td>
-                        {#                        <a href="{{ path('app_notes_liste_questions',{'id':candidat.id}) }}" class="btn btn-success">Questionnaires </a>#}
-
-                        {#                        <a href="{{ path('app_candidat_show', {'id': candidat.id}) }}">#}
-                        {#                            <i class="fas fa-eye" style="color: #28a745">#}
-
-                        {#                            </i>#}
-                        {#                        </a>#}
-                        {#                        <a href="{{ path('app_candidat_edit', {'id': candidat.id}) }}">#}
-                        {#                            <i class="fas fa-edit" style="color: #007bff">#}
-
-                        {#                            </i>#}
-                        {#                        </a>#}
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="7">no records found</td>
-                </tr>
-            {% endfor %}
             {% for question in questions %}
                 <tr>
                     <td>{{ loop.index }}</td>
 
-                    <td>{{ question.sourate.surahnumber }} : {{ question.sourate.surahnamearabic }}</td>
-                    <td>{{ question.sourate.ayahnumber}}</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td> {{  question.sourate }} :  {{  question.sourate_arabic }} </td>
+                    <td>{{ question.verset }}</td>
+                    <td>{{ question.memorisation }}</td>
+                    <td>{{ question.tajwid }}</td>
+                    <td>{{ question.lecture }}</td>
                     <td>
-                        <a href="{{ path('app_notes_questions',{'id':question.id}) }}"> noter</a>
+{#                        {% set moyenne = question.memorisation + question.tajwid + question.lecture %}#}
+                    {{ question.moyenne}}
+                    </td>
+                    <td>
+                        {% if question.action ==  true %}
+                            <a href="{{ path('app_notes_questions',{'id':question.id}) }}"> noter</a>
+                            {% else %}
+                                <a href=""> Details</a>
+                        {% endif %}
+{#                       #}
                     </td>
 
 {#                    <td>{{ candidat.active ? 'Yes' : 'No' }}</td>#}
