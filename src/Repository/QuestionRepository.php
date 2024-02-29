@@ -21,6 +21,7 @@ class QuestionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Question::class);
     }
+
     public function save(Question $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -53,4 +54,22 @@ class QuestionRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function questionsNonNotees($questions, $candidat, $jury)
+    {
+
+        $qb = $this->createQueryBuilder('q')
+            ->innerJoin('q.candidat', 'c')
+            ->andWhere('c.id = :candidat');
+        if ($questions != Null) {
+            $qb
+                ->andWhere('q.id NOT IN  (:val)')
+                ->setParameter('val', $questions);
+        }
+        return $qb
+            ->setParameter('candidat', $candidat)
+            ->getQuery()
+            ->getResult();
+
+    }
 }

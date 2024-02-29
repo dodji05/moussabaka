@@ -66,13 +66,16 @@ class NotesRepository extends ServiceEntityRepository
     /**
          * @return Notes[] Returns an array of Notes objects
      */
-    public function noteParCandidat($candidat)
+    public function noteParCandidat($candidat,$jury)
     {
         return $this->createQueryBuilder('n')
-            ->leftJoin('n.Questions','q')
-            ->leftJoin('q.candidat','c')
+            ->innerJoin('n.Questions','q')
+            ->innerJoin('q.candidat','c')
+            ->innerJoin('n.jury','j')
             ->andWhere('c.id = :val')
+            ->andWhere('j.id = :jury')
             ->setParameter('val', $candidat)
+            ->setParameter('jury', $jury)
             ->getQuery()
             ->getResult()
             ;

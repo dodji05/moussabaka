@@ -30,14 +30,24 @@ class NotesController extends AbstractController
     }
 
     #[Route('/les-questions/{id}/participant', name: 'app_notes_liste_questions')]
-    public function questionParticipant(Candidat $candidat,QuestionRepository $questionRepository,NotesRepository $notesRepository){
+    public function questionParticipant(Candidat $candidat,QuestionRepository $questionRepository,NotesRepository $notesRepository,JuryRepository $juryRepository){
 
-        $questionnaires = $questionRepository->findBy(['candidat'=>$candidat,'note'=>false]);
-        $notes = $notesRepository->noteParCandidat($candidat->getId());
-      //  dd($notees);
+        $jury =   $juryRepository->findOneBy(['membres'=>$this->getUser(),'annnee'=>1]);
 
+        // recuperation des questions du candidat deja notees par le jury encours
+        $notes = $notesRepository->noteParCandidat($candidat->getId(),$jury->getId());
+        $quest = [];
+        foreach ($notes  as $note){
+            $quest[] = $note->getQuestions()->getId();
+        }
+
+        // recuperation des questions du candidat non notees par le jury en cours
+        $questionnaires1 = $questionRepository->questionsNonNotees($quest,$candidat,$jury);
+
+        $result = array_merge($questionnaires1,  $notes);
+//        dd( $result );
         return $this->render('candidat/questionnaires_participants.html.twig', [
-            'questions' =>  $questionnaires,
+            'questions' =>   $questionnaires1,
             'notes'=> $notes,
             'candidat'=>$candidat
         ]);
