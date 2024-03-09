@@ -108,6 +108,38 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
+
+                    <li class="nav-item menu-open">
+                        {% if app.user %}
+                            {% if   is_granted('ROLE_ADMINISTRATEUR') %}
+
+                                <a href="#" class="nav-link {% if app.request.get('_route') starts with 'app_register' %} active {% endif %} or
+                            {% if app.request.get('_route') starts with 'app_user_index' %} active {% endif %}">
+                                    <i class="nav-icon fas fa-users"></i>
+                                    <p>
+                                        Utilsateurs
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+
+                                    <li class="nav-item">
+                                        <a href="{{ path('app_register') }}" class="nav-link {% if app.request.get('_route') starts with 'app_register' %} active {% endif %}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Ajouter un utilisateur</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ path('app_user_index') }}" class="nav-link {% if app.request.get('_route') starts with 'app_user_index' %} active {% endif %}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Liste des utilisateurs</p>
+                                        </a>
+                                    </li>
+
+                                </ul>
+
+
+
                     <li class="nav-item menu-open">
                         <a href="#"
                            class="nav-link {% if app.request.get('_route') starts with 'app_categorie_candidats_index' %} active {% endif %} or {% if app.request.get('_route') starts with 'app_candidat_index' %} active {% endif %}
@@ -143,7 +175,31 @@ or {% if app.request.get('_route') starts with 'app_candidat_new' %} active {% e
                         </ul>
                     </li>
                     <li class="nav-item menu-open">
-                        <a href="#" class="nav-link ">
+                        <a href="#" class="nav-link {% if app.request.get('_route') starts with 'app_annee_index' %} active {% endif %} or {% if app.request.get('_route') starts with 'app_annee_new' %} active {% endif %}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Annee
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ path('app_annee_index') }}" class="nav-link {% if app.request.get('_route') starts with 'app_annee_index' %} active {% endif %}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Liste des années</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('app_annee_new') }}" class="nav-link {% if app.request.get('_route') starts with 'app_annee_new' %} active {% endif %}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Ajouter une année</p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="nav-item menu-open">
+                        <a href="#" class="nav-link {% if app.request.get('_route') starts with 'app_jury_index' %} active {% endif %} or {% if app.request.get('_route') starts with 'app_jury_new' %} active {% endif %}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Jury
@@ -152,13 +208,13 @@ or {% if app.request.get('_route') starts with 'app_candidat_new' %} active {% e
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ path('app_jury_index') }}" class="nav-link">
+                                <a href="{{ path('app_jury_index') }}" class="nav-link {% if app.request.get('_route') starts with 'app_jury_index' %} active {% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Liste des jurees</p>
+                                    <p>Liste des jury</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ path('app_jury_new') }}" class="nav-link">
+                                <a href="{{ path('app_jury_new') }}" class="nav-link {% if app.request.get('_route') starts with 'app_jury_new' %} active {% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Ajouter un jury</p>
                                 </a>
@@ -166,35 +222,32 @@ or {% if app.request.get('_route') starts with 'app_candidat_new' %} active {% e
 
                         </ul>
                     </li>
-                    <li class="nav-item menu-open">
-                        {% if app.user %}
-                            {% if   is_granted('ROLE_ADMINISTRATEUR') %}
 
-                                <a href="#" class="nav-link {% if app.request.get('_route') starts with 'app_register' %} active {% endif %} or
-                            {% if app.request.get('_route') starts with 'app_user_index' %} active {% endif %}">
-                                    <i class="nav-icon fas fa-users"></i>
-                                    <p>
-                                        Utilsateurs
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
 
-                                    <li class="nav-item">
-                                        <a href="{{ path('app_register') }}" class="nav-link {% if app.request.get('_route') starts with 'app_register' %} active {% endif %}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Ajouter un utilisateur</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="{{ path('app_user_index') }}" class="nav-link {% if app.request.get('_route') starts with 'app_user_index' %} active {% endif %}">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Liste des utilisateurs</p>
-                                        </a>
-                                    </li>
 
-                                </ul>
-                            {% endif %}
+
+                    {% endif %}
+
+                    {% if is_granted('ROLE_MEMBRE_JURY') %}
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link {% if app.request.get('_route') starts with 'app_notes_liste_participant' %} active {% endif %}  ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Notation Candidat
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ path('app_notes_liste_participant') }}" class="nav-link {% if app.request.get('_route') starts with 'app_notes_liste_questions' %} active {% endif %}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Noter Candidat</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        {% endif %}
                         {% endif %}
                     </li>
 

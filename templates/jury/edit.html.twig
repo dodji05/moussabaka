@@ -1,13 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Jury{% endblock %}
 
 {% block body %}
-    <h1>Edit Jury</h1>
 
-    {{ include('jury/_form.html.twig', {'button_label': 'Update'}) }}
+    <div class="col-md-8 offset-md-2">
+        <div class="card card-outline card-success">
+            <div class="card-header">
+                <div class="card-title"> Modifier les informations d'un jury</div>
+            </div>
+            <div class="card-body">
+                {{ include('jury/_form.html.twig', {'button_label': 'Modifier'}) }}
+            </div>
+        </div>
 
-    <a href="{{ path('app_jury_index') }}">back to list</a>
+    </div>
 
-    {{ include('jury/_delete_form.html.twig') }}
 {% endblock %}

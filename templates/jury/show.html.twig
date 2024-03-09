@@ -3,20 +3,59 @@
 {% block title %}Jury{% endblock %}
 
 {% block body %}
-    <h1>Jury</h1>
+    <div class="col-md-12">
+        <div class="card card-outline card-success">
+            <div class="card-header">
+                <div class="card-title"> Informations du Jury</div>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th>Nom du Jury</th>
+                        <td>{{ jury.membres.nom}}</td>
+                    </tr>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ jury.id }}</td>
-            </tr>
-        </tbody>
-    </table>
+                    <tr>
+                        <th>Prénoms</th>
+                        <td>{{ jury.membres.prenoms }}</td>
+                    </tr>
+                    <tr>
+                        <th>Mail</th>
+                        <td>{{ jury.membres.email }}</td>
+                    </tr>
 
-    <a href="{{ path('app_jury_index') }}">back to list</a>
+                    {#                    <tr>#}
+                    {#                        <th>Active</th>#}
+                    {#                        <td>{{ candidat.active ? 'Yes' : 'No' }}</td>#}
+                    {#                    </tr>#}
+                    {#                    <tr>#}
+                    {#                        <th>CreatedAt</th>#}
+                    {#                        <td>{{ candidat.createdAt ? candidat.createdAt|date('Y-m-d H:i:s') : '' }}</td>#}
+                    {#                    </tr>#}
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    <a href="{{ path('app_jury_edit', {'id': jury.id}) }}">edit</a>
+    </div>
 
-    {{ include('jury/_delete_form.html.twig') }}
+    {#    <div class="col-md-12">#}
+    {#        <div class="card card-outline card-success">#}
+    {#            <div class="card-header">#}
+    {#                <div class="card-title"> Notes du candidat</div>#}
+    {#            </div>#}
+    {#            <div class="card-body">#}
+
+    {#            </div>#}
+    {#        </div>#}
+
+    {#    </div>#}
+
+    {#    <a href="{{ path('app_candidat_index') }}">back to list</a>#}
+
+    {#    <a href="{{ path('app_candidat_edit', {'id': candidat.id}) }}">edit</a>#}
+
+{#    {{ include('candidat/_delete_form.html.twig') }}#}
 {% endblock %}
+

@@ -18,6 +18,10 @@ class JuryType extends AbstractType
         $builder
             ->add('membres', EntityType::class, [
                 'class' => User::class,
+                'required'=>true,
+                'attr'=>[
+                    'class'=>'form-control'
+                ],
                 'query_builder' => function (UserRepository $userRepository) {
                     return $userRepository->createQueryBuilder('u')
                         ->andWhere('u.roles LIKE :val')
@@ -26,7 +30,10 @@ class JuryType extends AbstractType
                 }
             ])
             ->add('annnee',EntityType::class,[
-                'class'=>Annee::class
+                'class'=>Annee::class,
+                'attr'=>[
+                    'class'=>'form-control'
+                ]
             ])
         ;
     }

@@ -23,15 +23,40 @@ class JuryController extends AbstractController
     }
 
     #[Route('/new', name: 'app_jury_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,JuryRepository $juryRepository): Response
     {
         $jury = new Jury();
         $form = $this->createForm(JuryType::class, $jury);
+
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($jury);
-            $entityManager->flush();
+            $found=$juryRepository->findOneBy([
+                'membres'=>$form->get('membres')->getData(),
+                'annnee'=>$form->get('annnee')->getData()
+            ]);
+           // dd($found);
+            if($found){
+                $this->addFlash('danger', "Le jury :" .$jury->getMembres()->getFullName() ."  a été déjà ajouté pour cette année : ".$form->get('annnee')->getData());
+
+
+                return $this->redirectToRoute('app_jury_new', [], Response::HTTP_SEE_OTHER);
+
+            } else{
+
+              $entityManager->persist($jury);
+              $entityManager->flush();
+
+                $this->addFlash('success', "Le jury :" .$jury->getMembres()->getFullName() ."  a été ajouté ");
+
+
+                return $this->redirectToRoute('app_jury_index', [], Response::HTTP_SEE_OTHER);
+
+
+          }
+
 
             return $this->redirectToRoute('app_jury_index', [], Response::HTTP_SEE_OTHER);
         }

@@ -1,7 +1,9 @@
 {% extends 'base_table_admilte.html.twig' %}
 {% block ti %} Liste des candidats{% endblock %}
+{% block card_header_title %} Liste des candidats{% endblock %}
+
     {% block tablecontent %}
-        <table class="table table-striped">
+
             <thead>
             <tr>
                 <th></th>
@@ -44,6 +46,6 @@
                 </tr>
             {% endfor %}
             </tbody>
-        </table>
+
     {% endblock %}
 

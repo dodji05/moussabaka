@@ -26,6 +26,7 @@ class Jury
     private Collection $notes;
 
 
+
     public function __construct()
     {
         $this->notes = new ArrayCollection();

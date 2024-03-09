@@ -1,11 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Jury{% endblock %}
 
 {% block body %}
-    <h1>Create new Jury</h1>
 
-    {{ include('jury/_form.html.twig') }}
+    <div class="col-md-8 offset-md-2">
+        <div class="card card-outline card-success">
+            <div class="card-header">
+                <div class="card-title"> Ajouter un nouveau Jury</div>
+            </div>
+            <div class="card-body">
+                {{ include('jury/_form.html.twig') }}
+            </div>
+        </div>
 
-    <a href="{{ path('app_jury_index') }}">back to list</a>
+    </div>
 {% endblock %}

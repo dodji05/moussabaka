@@ -56,7 +56,7 @@ class CandidatRepository extends ServiceEntityRepository
             ->innerJoin('c.categorie','categorie')
             ->andWhere('categorie.name = :val')
             ->setParameter('val', $value)
-            ->orderBy('c.mom', 'ASC')
+           // ->orderBy('c.mom', 'ASC')
             //->setMaxResults(10)
             ->getQuery()
             ->getResult()
