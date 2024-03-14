@@ -26,6 +26,7 @@ class JuryController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager,JuryRepository $juryRepository): Response
     {
         $jury = new Jury();
+
         $form = $this->createForm(JuryType::class, $jury);
 
         $form->handleRequest($request);
@@ -33,11 +34,23 @@ class JuryController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $nbjury= count($juryRepository->findBy([
+                'annnee'=>$form->get('annnee')->getData()
+            ]));
+           //dd($nbjury);
             $found=$juryRepository->findOneBy([
                 'membres'=>$form->get('membres')->getData(),
                 'annnee'=>$form->get('annnee')->getData()
             ]);
            // dd($found);
+            if($nbjury==3){
+                $this->addFlash('danger', "Vous aviez atteint le nombre de memebres de jury À ajouter pour cette année :".$form->get('annnee')->getData());
+
+
+                return $this->redirectToRoute('app_jury_index', [], Response::HTTP_SEE_OTHER);
+
+            }
             if($found){
                 $this->addFlash('danger', "Le jury :" .$jury->getMembres()->getFullName() ."  a été déjà ajouté pour cette année : ".$form->get('annnee')->getData());
 
